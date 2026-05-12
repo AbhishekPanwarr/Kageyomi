@@ -7,13 +7,39 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 KAGEYOMI_ROOT="${REPO_ROOT}/Kageyomi"
 BLINDFERENCE_ROOT="${REPO_ROOT}/blindference/wave2_network"
 AGENT_DIR="${KAGEYOMI_ROOT}"
+FRONTEND_DIR="${KAGEYOMI_ROOT}/frontend"
 ICL_ENV="${BLINDFERENCE_ROOT}/packages/icl/.env"
 KAGEYOMI_ENV="${KAGEYOMI_ROOT}/.env"
 AGENT_ENV="${AGENT_DIR}/.env"
+FRONTEND_ENV="${FRONTEND_DIR}/.env"
 LOG_DIR="${SCRIPT_DIR}/logs"
 PID_DIR="${SCRIPT_DIR}/pids"
 
 mkdir -p "${LOG_DIR}" "${PID_DIR}"
+
+sync_frontend_env() {
+  local env_file="$1"
+  cat >"${env_file}" <<EOF
+VITE_ICL_API_URL=${VITE_ICL_API_URL:-http://127.0.0.1:8000}
+VITE_ICL_BASE_URL=${VITE_ICL_BASE_URL:-http://127.0.0.1:8000}
+VITE_CHAIN_RPC_URL=${VITE_CHAIN_RPC_URL:-${ARBITRUM_SEPOLIA_RPC:-https://sepolia-rollup.arbitrum.io/rpc}}
+VITE_COFHE_RPC_URL=${VITE_COFHE_RPC_URL:-${VITE_CHAIN_RPC_URL:-${ARBITRUM_SEPOLIA_RPC:-https://sepolia-rollup.arbitrum.io/rpc}}}
+VITE_COFHE_URL=${VITE_COFHE_URL:-https://testnet-cofhe.fhenix.zone}
+VITE_COFHE_VERIFIER_URL=${VITE_COFHE_VERIFIER_URL:-https://testnet-cofhe-vrf.fhenix.zone}
+VITE_COFHE_THRESHOLD_URL=${VITE_COFHE_THRESHOLD_URL:-https://testnet-cofhe-tn.fhenix.zone}
+VITE_COFHE_DISABLE_PERSISTED_KEYS=${VITE_COFHE_DISABLE_PERSISTED_KEYS:-true}
+VITE_CHAIN_ID=${VITE_CHAIN_ID:-421614}
+VITE_WALLET_CONNECT_PROJECT_ID=${VITE_WALLET_CONNECT_PROJECT_ID:-}
+VITE_BLINDFERENCE_AGENT_ADDRESS=${VITE_BLINDFERENCE_AGENT_ADDRESS:-${EXECUTION_COMMITMENT_REGISTRY_ADDRESS:-}}
+VITE_BLINDFERENCE_INPUT_VAULT_ADDRESS=${VITE_BLINDFERENCE_INPUT_VAULT_ADDRESS:-${BLINDFERENCE_INPUT_VAULT_ADDRESS:-${INPUT_VAULT_ADDRESS:-0x8dD7B2A9B69C76A69d33B2DF46426Cbe657a902b}}}
+VITE_PROMPT_KEY_STORE_ADDRESS=${VITE_PROMPT_KEY_STORE_ADDRESS:-${PROMPT_KEY_STORE_ADDRESS:-}}
+VITE_KAGEYOMI_EXTENSION_CONTRACT_ADDRESS=${VITE_KAGEYOMI_EXTENSION_CONTRACT_ADDRESS:-${KAGEYOMI_EXTENSION_CONTRACT_ADDRESS:-}}
+VITE_TEXT_MODEL_DEFAULT=${VITE_TEXT_MODEL_DEFAULT:-groq:llama-3.3-70b-versatile}
+VITE_PROMPT_UPLOAD_TIMEOUT_MS=${VITE_PROMPT_UPLOAD_TIMEOUT_MS:-20000}
+VITE_IPFS_GATEWAY_URL=${VITE_IPFS_GATEWAY_URL:-${PINATA_GATEWAY_URL:-https://gateway.pinata.cloud/ipfs}}
+VITE_KAGEYOMI_AGENT_MODE=true
+EOF
+}
 
 stop_if_running() {
   local pid_file="$1"
@@ -28,6 +54,7 @@ stop_if_running() {
 }
 
 stop_if_running "${PID_DIR}/agent.pid"
+stop_if_running "${PID_DIR}/frontend.pid"
 
 if [[ ! -f "${ICL_ENV}" ]]; then
   echo "Missing ${ICL_ENV}" >&2
@@ -41,6 +68,9 @@ if [[ -f "${KAGEYOMI_ENV}" ]]; then
 fi
 if [[ -f "${AGENT_ENV}" ]]; then
   source "${AGENT_ENV}"
+fi
+if [[ -f "${FRONTEND_DIR}/.env" ]]; then
+  source "${FRONTEND_DIR}/.env"
 fi
 set +a
 
@@ -78,8 +108,32 @@ export BLINDFERENCE_NODE_AGENT_SERVICE_URL="http://127.0.0.1:8001"
 export VITE_CHAIN_RPC_URL="${ARBITRUM_SEPOLIA_RPC:-https://sepolia-rollup.arbitrum.io/rpc}"
 export VITE_COFHE_RPC_URL="${VITE_CHAIN_RPC_URL}"
 
+sync_frontend_env "${FRONTEND_ENV}"
+
 echo "Starting Blindference quorum stack in Kageyomi mode ..."
 bash "${BLINDFERENCE_ROOT}/scripts/demo/run-stack.sh"
+
+echo "Stopping shared Blindference frontend ..."
+bash "${BLINDFERENCE_ROOT}/scripts/demo/stop.sh" frontend >/dev/null 2>&1 || true
+
+echo "Starting Kageyomi frontend on http://127.0.0.1:3000 ..."
+(
+  cd "${FRONTEND_DIR}"
+  nohup npm run dev -- --force >"${LOG_DIR}/frontend.log" 2>&1 &
+  echo $! >"${PID_DIR}/frontend.pid"
+)
+
+for _ in {1..30}; do
+  if curl -sf http://127.0.0.1:3000 >/dev/null 2>&1; then
+    break
+  fi
+  sleep 1
+done
+
+if ! curl -sf http://127.0.0.1:3000 >/dev/null 2>&1; then
+  echo "Kageyomi frontend did not become healthy. Check ${LOG_DIR}/frontend.log" >&2
+  exit 1
+fi
 
 echo
 echo "Kageyomi live stack started."

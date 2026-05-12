@@ -43,7 +43,7 @@ User browser
 - FastAPI bridge for Blindference Python node integration
 - Companion on-chain UAVP metadata registry via `PrivateInferenceExtension.sol`
 - ICL integration for posting `receiptRoot`, `receiptsCID`, `traceHash`, and `outputHash`
-- Judge-facing Next.js terminal with receipts modal and local decrypt flow
+- Separate Kageyomi frontend with receipts modal and local decrypt flow
 - Demo-safe cache and rate-limited SoSoValue client utilities
 
 ## What Is Reused From Blindference
@@ -64,7 +64,7 @@ kageyomi/
 ├── agents/               # 7 LangGraph nodes
 ├── uavp/                 # Receipt wrapper, canonicalize, IPFS upload
 ├── pipeline/             # SoSoValue client, rate limiter, state graph
-├── frontend/             # Next.js UI
+├── scripts/              # Deploy + live stack launchers
 ├── contracts/            # UAVP extension stubs (reuse from blindference)
 └── README.md             # Setup, env vars, demo instructions
 ```
@@ -80,7 +80,7 @@ This is the recommended live flow.
 
 - Blindference deploys the core contracts first.
 - Kageyomi deploys only the UAVP extension layer on top.
-- The live browser submission surface is the Blindference frontend running in `VITE_KAGEYOMI_AGENT_MODE=true`.
+- The live browser submission surface is the separate `Kageyomi/frontend` app.
 - The Kageyomi FastAPI bridge runs beside the ICL and is used by leader and verifier nodes for UAVP agent jobs.
 
 ## Contract Deploy
@@ -119,7 +119,7 @@ That launcher starts:
 - leader node
 - verifier 1 node
 - verifier 2 node
-- Blindference frontend in Kageyomi agent mode on `127.0.0.1:3000`
+- Kageyomi frontend on `127.0.0.1:3000`
 
 Useful helpers:
 
@@ -128,13 +128,13 @@ bash Kageyomi/scripts/status-live-stack.sh
 bash Kageyomi/scripts/stop-live-stack.sh
 ```
 
-Why the Blindference frontend is the live UI right now:
+Why the Kageyomi frontend is the live UI:
 
-- it already owns the wallet + CoFHE + `PromptKeyStore` flow
-- it already encrypts prompts client-side and stores the prompt key on-chain
-- we patched it to submit `metadata.is_agent_job=true` and surface UAVP metadata on the status page
+- it runs the same wallet + CoFHE + `PromptKeyStore` flow as Blindference
+- it submits the same `metadata.is_agent_job=true` path into ICL
+- it keeps the Kageyomi-specific research experience separate from the generic Blindference UI
 
-The Next.js app in `apps/web` remains a judge/demo shell, but the fully connected browser path today is the Blindference frontend running in Kageyomi mode.
+The fully connected browser path is the separate Kageyomi frontend backed by the Blindference network stack.
 
 ## Validation
 

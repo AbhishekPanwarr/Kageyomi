@@ -1,0 +1,10 @@
+
+> kageyomi-frontend@0.0.0 dev
+> vite --port=3000 --host=127.0.0.1 --force
+
+7:44:56 PM [vite] (client) Forced re-optimization of dependencies
+Port 3000 is in use, trying another one...
+
+  VITE v6.4.2  ready in 352 ms
+
+  ➜  Local:   http://127.0.0.1:3001/

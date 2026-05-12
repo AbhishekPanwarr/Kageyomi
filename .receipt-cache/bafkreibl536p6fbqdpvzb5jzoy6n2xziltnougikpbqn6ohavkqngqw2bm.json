@@ -1,0 +1,15 @@
+[
+  {
+    "jobId": "0xc73167d8299d4b84967b922efcb62dba",
+    "toolName": "fetch_ETF_summary_history",
+    "toolCallId": "fetch_ETF_summary_history-1778595393584",
+    "toolArgumentsJson": "{\"country_code\":\"US\",\"limit\":7,\"symbol\":\"BTC\"}",
+    "paramsHash": "0x243b6258543c5c8ee1db021f91e30d24ee2219feb885b5c0c271fd3b5fe166dd",
+    "responseHash": "0xd0be88eaec6de2d99ff9e78e3ff5baf0db93de02e32d8ad3e915ee59ece3e025",
+    "dataType": "json",
+    "canonicalData": "[{\"cum_net_inflow\":59367593114.943,\"date\":\"2026-05-11\",\"total_net_assets\":109083860311.0306,\"total_net_inflow\":27286410.25,\"total_value_traded\":1970569766.8},{\"cum_net_inflow\":59367593114.943,\"date\":\"2026-05-11\",\"total_net_assets\":109083860311.0306,\"total_net_inflow\":27286410.25,\"total_value_traded\":1970569766.8},{\"cum_net_inflow\":59367593114.943,\"date\":\"2026-05-11\",\"total_net_assets\":109083860311.0306,\"total_net_inflow\":1279768455.705,\"total_value_traded\":16507935595.36},{\"cum_net_inflow\":59340306704.693,\"date\":\"2026-05-08\",\"total_net_assets\":106610918466.79996,\"total_net_inflow\":-145651012.3,\"total_value_traded\":1453038438.54},{\"cum_net_inflow\":59340306704.693,\"date\":\"2026-05-08\",\"total_net_assets\":106610918466.79996,\"total_net_inflow\":622747477.695,\"total_value_traded\":11757228382.38},{\"cum_net_inflow\":59485957716.993,\"date\":\"2026-05-07\",\"total_net_assets\":106765504911.43369,\"total_net_inflow\":-277497051.705,\"total_value_traded\":1984367977.7},{\"cum_net_inflow\":59763454768.698,\"date\":\"2026-05-06\",\"total_net_assets\":108756353000.07803,\"total_net_inflow\":46330552.9,\"total_value_traded\":2114780418.9}]",
+    "timestampMs": 1778595393584,
+    "receiptHash": "0x29940da9132cef54adacd6bfc6f5ca072b48ac2562fdf1f417e6915b47c76350",
+    "signature": "3db34fd993382d1af329e454fe90d6ffd0d769208dceb4805eb363c15cae03035e85688de071c39d1a86b5abdeaffc339a06f278da4a445ae6874776756d02eb1b"
+  }
+]
