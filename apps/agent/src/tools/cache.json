@@ -1,0 +1,26 @@
+{
+  "/etfs/summary-history?country_code=US&limit=7&symbol=BTC": {
+    "code": 0,
+    "message": "success",
+    "data": [
+      {
+        "date": "2026-05-10",
+        "total_net_inflow": "12345678.123456789",
+        "total_value_traded": "2200000000.0000001",
+        "request_id": "ephemeral-1"
+      }
+    ]
+  },
+  "/macro/events/CPI/history?limit=5": {
+    "code": 0,
+    "message": "success",
+    "data": [
+      {
+        "date": "2026-04-10",
+        "actual": 3.4567891,
+        "forecast": 3.4,
+        "previous": 3.2
+      }
+    ]
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "/etfs/summary-history?country_code=US&limit=7&symbol=BTC": {
+    "code": 0,
+    "message": "success",
+    "data": [
+      {
+        "date": "2026-05-10",
+        "total_net_inflow": "12345678.123456789",
+        "total_value_traded": "2200000000.0000001",
+        "request_id": "ephemeral-1"
+      },
+      {
+        "date": "2026-05-09",
+        "total_net_inflow": "-4567890.22222222",
+        "total_value_traded": "1980000000.44444444",
+        "timestamp": 123456789
+      }
+    ]
+  },
+  "/macro/events/CPI/history?limit=5": {
+    "code": 0,
+    "message": "success",
+    "data": [
+      {
+        "date": "2026-04-10",
+        "actual": 3.4567891,
+        "forecast": 3.4,
+        "previous": 3.2
+      }
+    ]
+  },
+  "/news/search?category=1&keyword=btc%20etf&page_size=10": {
+    "code": 0,
+    "message": "success",
+    "data": {
+      "list": [
+        {
+          "title": "BTC ETF demand remains strong",
+          "content": "<p>Institutional inflows <strong>accelerated</strong> this week.</p>",
+          "source_link": "https://example.com/article",
+          "request_id": "news-1"
+        }
+      ]
+    }
+  },
+  "/btc-treasuries/MSTR/purchase-history?limit=5": {
+    "code": 0,
+    "message": "success",
+    "data": [
+      {
+        "date": "2026-05-01",
+        "ticker": "MSTR",
+        "btc_holding": 750000,
+        "btc_acq": 1895,
+        "acq_cost": 120000000,
+        "avg_btc_cost": 63324.1234567
+      }
+    ]
+  },
+  "/indices/ssimag7/market-snapshot": {
+    "code": 0,
+    "message": "success",
+    "data": {
+      "price": 20.93,
+      "24h_change_pct": -0.001632423,
+      "7day_roi": 0.005612341,
+      "1month_roi": 0.06200321,
+      "3month_roi": 0.27500111,
+      "1year_roi": 0.15,
+      "ytd": -0.243
+    }
+  }
+}
