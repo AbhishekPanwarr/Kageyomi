@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 KAGEYOMI_ROOT="${REPO_ROOT}/Kageyomi"
 BLINDFERENCE_ROOT="${REPO_ROOT}/blindference/wave2_network"
-AGENT_DIR="${KAGEYOMI_ROOT}/apps/agent-py"
+AGENT_DIR="${KAGEYOMI_ROOT}"
 ICL_ENV="${BLINDFERENCE_ROOT}/packages/icl/.env"
 KAGEYOMI_ENV="${KAGEYOMI_ROOT}/.env"
 AGENT_ENV="${AGENT_DIR}/.env"
@@ -57,7 +57,7 @@ fi
 echo "Starting Kageyomi agent bridge on http://127.0.0.1:8001 ..."
 (
   cd "${AGENT_DIR}"
-  nohup "${UVICORN_BIN}" server:app --host 127.0.0.1 --port 8001 >"${LOG_DIR}/agent.log" 2>&1 &
+  nohup "${UVICORN_BIN}" main:app --host 127.0.0.1 --port 8001 >"${LOG_DIR}/agent.log" 2>&1 &
   echo $! >"${PID_DIR}/agent.pid"
 )
 

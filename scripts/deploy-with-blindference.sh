@@ -89,8 +89,7 @@ targets = [
     repo_root / "blindference/wave2_network/packages/icl/.env",
     repo_root / "blindference/wave2_network/packages/frontend/.env",
     repo_root / "Kageyomi/.env",
-    repo_root / "Kageyomi/apps/agent-py/.env",
-    repo_root / "Kageyomi/apps/web/.env.local",
+    repo_root / "Kageyomi/frontend/.env.local",
 ]
 
 frontend_key_map = {
@@ -136,8 +135,6 @@ for target in targets:
                 assignments["VITE_PROMPT_KEY_STORE_ADDRESS"] = values["PROMPT_KEY_STORE_ADDRESS"]
         elif "icl" in target.parts:
             pass
-        elif "agent-py" in target.parts:
-            assignments["FHENIX_RPC_URL"] = assignments.get("FHENIX_RPC_URL", "")
     if target.name == ".env.local":
         assignments = {web_key_map[k]: v for k, v in values.items() if k in web_key_map}
         assignments["NEXT_PUBLIC_ICL_API_URL"] = "http://127.0.0.1:8000"

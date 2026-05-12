@@ -60,17 +60,13 @@ Blindference's existing commitment registry still handles verifier commitment co
 ## Repository Layout
 
 ```text
-Kageyomi/
-├── apps/
-│   ├── agent/       # TypeScript UAVP agent core
-│   ├── agent-py/    # FastAPI bridge + demo utilities
-│   └── web/         # Next.js confidential terminal
-├── contracts/
-│   └── kageyomi/    # UAVP metadata registry contract
-├── docs/
-│   ├── DEMO_SCRIPT.md
-│   └── JUDGE_GUIDE.md
-└── README.md
+kageyomi/
+├── agents/               # 7 LangGraph nodes
+├── uavp/                 # Receipt wrapper, canonicalize, IPFS upload
+├── pipeline/             # SoSoValue client, rate limiter, state graph
+├── frontend/             # Next.js UI
+├── contracts/            # UAVP extension stubs (reuse from blindference)
+└── README.md             # Setup, env vars, demo instructions
 ```
 
 ## Quick Start
@@ -160,6 +156,27 @@ Notes:
 - `KAGEYOMI_USE_MOCK_SOSO=false` means the agent hits the real SoSoValue API.
 - `SOSO_REQUESTS_PER_MINUTE=10` matches the buildathon rate limit.
 - `npm run smoke:live --workspace @kageyomi/agent -- "<prompt>"` is the recommended no-encryption smoke test before running the full Blindference stack.
+
+## Env Setup
+
+1. Create a `.env` file at the root.
+2. Add your SoSoValue API key: `SOSOVALUE_API_KEY=your_key_here`
+3. Add your Groq API key: `GROQ_API_KEY=your_key_here`
+4. Optionally configure rate limits: `SOSO_REQUESTS_PER_MINUTE=10`
+5. Optionally configure IPFS pinning: `PINATA_JWT=your_pinata_jwt_here`
+
+## Agent Selection
+
+The Kageyomi pipeline automatically routes the query to 7 specialized agents in parallel via LangGraph:
+1. FlowSentinel (ETF/Macro flows)
+2. NarrativeScope (News/Sentiment)
+3. TreasuryRadar (Corporate BTC)
+4. IndexArb (Relative value/pairs)
+5. MacroShield (Event risk modeling)
+6. VentureMap (Fundraising/VC)
+7. StrategyForge (Multi-agent composer)
+
+Each agent focuses on its specific domain and passes typed signals to `StrategyForge` which synthesizes the final deterministic output.
 
 ## Judge Walkthrough
 
