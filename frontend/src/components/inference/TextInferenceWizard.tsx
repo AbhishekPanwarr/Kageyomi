@@ -32,6 +32,7 @@ type TextModelKey = keyof typeof TEXT_MODEL_OPTIONS
 const KAGEYOMI_AGENT_MODE = import.meta.env.VITE_KAGEYOMI_AGENT_MODE === 'true'
 
 const KAGEYOMI_AGENTS = [
+  'Auto',
   'FullGraph',
   'FlowSentinel',
   'NarrativeScope',
@@ -235,7 +236,7 @@ export function TextInferenceWizard() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20"
+                className="flex items-center gap-1.5 text-[10px] font-bold text-zinc-300 uppercase tracking-widest bg-zinc-800 px-2 py-0.5 rounded border border-zinc-700"
               >
                 <Lock className="w-3 h-3" /> FHE Protected
               </motion.span>
@@ -244,7 +245,7 @@ export function TextInferenceWizard() {
         </div>
         
         <div className="relative group">
-          <div className={`absolute -inset-0.5 rounded-xl bg-gradient-to-r from-emerald-500/0 via-emerald-500/20 to-emerald-500/0 blur opacity-0 transition-opacity duration-500 ${isFocused ? 'opacity-100' : 'group-hover:opacity-50'}`} />
+          <div className={`absolute -inset-0.5 rounded-xl bg-gradient-to-r from-zinc-700/0 via-zinc-600/20 to-zinc-700/0 blur opacity-0 transition-opacity duration-500 ${isFocused ? 'opacity-100' : 'group-hover:opacity-50'}`} />
           <textarea
             className="relative min-h-[220px] w-full resize-y rounded-xl border border-zinc-800 bg-black px-5 py-4 text-sm leading-relaxed text-white placeholder:text-zinc-600 focus:border-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-700 transition-all shadow-inner"
             onChange={(event) => setPrompt(event.target.value)}
@@ -258,7 +259,7 @@ export function TextInferenceWizard() {
 
       <motion.div variants={itemVariants} className="rounded-xl border border-zinc-800 bg-white/[0.02] p-5">
         <div className="flex items-start gap-4">
-          <div className="mt-1 rounded-full bg-emerald-500/10 p-2 border border-emerald-500/20 text-emerald-500">
+          <div className="mt-1 rounded-full bg-zinc-800 p-2 border border-zinc-700 text-zinc-400">
             <Lock className="w-4 h-4" />
           </div>
           <div className="space-y-1">
@@ -279,7 +280,7 @@ export function TextInferenceWizard() {
               </label>
               <div className="relative">
                 <select
-                  className="w-full sm:min-w-[200px] appearance-none rounded-lg border border-emerald-500/50 bg-black pl-4 pr-10 py-3 text-sm font-medium text-white outline-none transition-all focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/30 disabled:opacity-50"
+                  className="w-full sm:min-w-[200px] appearance-none rounded-lg border border-zinc-700 bg-zinc-900 pl-4 pr-10 py-3 text-sm font-medium text-white outline-none transition-all focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 disabled:opacity-50"
                   disabled={isBusy}
                   onChange={(event) => setSelectedAgent(event.target.value)}
                   value={selectedAgent}
@@ -307,9 +308,9 @@ export function TextInferenceWizard() {
               Execution Model
             </label>
           <div className="relative">
-            <Cpu className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500/50" />
+            <Cpu className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
             <select
-              className="w-full sm:min-w-[260px] appearance-none rounded-lg border border-white/10 bg-black pl-10 pr-10 py-3 text-sm font-medium text-white outline-none transition-all focus:border-zinc-700 focus:ring-1 focus:ring-zinc-700 disabled:opacity-50"
+              className="w-full sm:min-w-[260px] appearance-none rounded-lg border border-zinc-700 bg-zinc-900 pl-10 pr-10 py-3 text-sm font-medium text-white outline-none transition-all focus:border-zinc-600 focus:ring-1 focus:ring-zinc-600 disabled:opacity-50"
               disabled={isBusy}
               id="text-model-select"
               onChange={(event) => setSelectedModelKey(event.target.value as TextModelKey)}
@@ -332,7 +333,7 @@ export function TextInferenceWizard() {
         </div>
 
         <button
-          className="group relative flex w-full sm:w-auto min-w-[280px] items-center justify-center rounded-xl bg-emerald-500 px-8 py-4 text-sm font-bold uppercase tracking-wide text-black transition-all hover:bg-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.3)]"
+          className="group relative flex w-full sm:w-auto min-w-[280px] items-center justify-center rounded-xl bg-white px-8 py-4 text-sm font-bold uppercase tracking-wide text-black transition-all hover:bg-zinc-200 disabled:opacity-60 disabled:cursor-not-allowed overflow-hidden"
           disabled={isBusy || !isReady || !address}
           onClick={handleSubmit}
           type="button"

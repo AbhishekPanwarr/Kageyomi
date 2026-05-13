@@ -1,0 +1,15 @@
+[
+  {
+    "jobId": "0xb50f8db6b01c447d83fc33b653e70083",
+    "toolName": "fetch_index_market_snapshot",
+    "toolCallId": "fetch_index_market_snapshot-1778628144263",
+    "toolArgumentsJson": "{}",
+    "paramsHash": "0x44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "responseHash": "0x479caef2edfd1abac287787636b3c4bd781579ccddcd28058106049f89cb41da",
+    "dataType": "json",
+    "canonicalData": "{\"change_pct_24h\":-0.0215,\"price\":14.762118,\"roi_1m\":0.1287,\"roi_1y\":-0.3193,\"roi_3m\":0.1537,\"roi_7d\":0.0089,\"ytd\":-0.1613}",
+    "timestampMs": 1778628144263,
+    "receiptHash": "0x7fe115bd727f0bc66d525f8c5ea5f650f93fb0bc68dfb5539af7e3645a2ceb85",
+    "signature": "7506bd1d5de365a9be3e208f7ba1bc3a4802d3f5bf1e139c6138cc9f434c4f186f55f6fd0e518be0df3e6345b5f69c7a93ba70cc5d22129485aa7d167ec8eeaa1c"
+  }
+]

@@ -35,7 +35,7 @@ VITE_BLINDFERENCE_INPUT_VAULT_ADDRESS=${VITE_BLINDFERENCE_INPUT_VAULT_ADDRESS:-$
 VITE_PROMPT_KEY_STORE_ADDRESS=${VITE_PROMPT_KEY_STORE_ADDRESS:-${PROMPT_KEY_STORE_ADDRESS:-}}
 VITE_KAGEYOMI_EXTENSION_CONTRACT_ADDRESS=${VITE_KAGEYOMI_EXTENSION_CONTRACT_ADDRESS:-${KAGEYOMI_EXTENSION_CONTRACT_ADDRESS:-}}
 VITE_TEXT_MODEL_DEFAULT=${VITE_TEXT_MODEL_DEFAULT:-groq:llama-3.3-70b-versatile}
-VITE_PROMPT_UPLOAD_TIMEOUT_MS=${VITE_PROMPT_UPLOAD_TIMEOUT_MS:-20000}
+VITE_PROMPT_UPLOAD_TIMEOUT_MS=${VITE_PROMPT_UPLOAD_TIMEOUT_MS:-60000}
 VITE_IPFS_GATEWAY_URL=${VITE_IPFS_GATEWAY_URL:-${PINATA_GATEWAY_URL:-https://gateway.pinata.cloud/ipfs}}
 VITE_KAGEYOMI_AGENT_MODE=true
 EOF
@@ -110,27 +110,50 @@ export VITE_COFHE_RPC_URL="${VITE_CHAIN_RPC_URL}"
 
 sync_frontend_env "${FRONTEND_ENV}"
 
+# Run the Blindference quorum stack but tell its frontend to use port 3002
+# so that the Kageyomi frontend can own port 3000 without a race.
 echo "Starting Blindference quorum stack in Kageyomi mode ..."
-bash "${BLINDFERENCE_ROOT}/scripts/demo/run-stack.sh"
+VITE_PORT=3002 bash "${BLINDFERENCE_ROOT}/scripts/demo/run-stack.sh"
 
 echo "Stopping shared Blindference frontend ..."
-bash "${BLINDFERENCE_ROOT}/scripts/demo/stop.sh" frontend >/dev/null 2>&1 || true
+bash "${BLINDFERENCE_ROOT}/scripts/demo/stop.sh" frontend > /dev/null 2>&1 || true
+
+# Belt-and-suspenders: kill anything still on port 3000 before Kageyomi binds.
+for _try in {1..20}; do
+  PORT_PID=$(ss -tlnp 2>/dev/null | awk '/:3000 /{match($0,"pid=([0-9]+)",a); print a[1]}')
+  [[ -z "${PORT_PID}" ]] && break
+  echo "Port 3000 held by PID ${PORT_PID}, killing..."
+  kill "${PORT_PID}" > /dev/null 2>&1 || true
+  sleep 0.4
+done
+
+# Force-free port 3000 — the Blindference frontend may not exit via PID file
+# alone. Kill anything still holding the port before Kageyomi claims it.
+for _try in {1..30}; do
+  PORT_PID=$(ss -tlnp 2>/dev/null | awk '/:3000 /{match($0,"pid=([0-9]+)",a); print a[1]}')
+  if [[ -z "${PORT_PID}" ]]; then
+    break
+  fi
+  echo "Port 3000 held by PID ${PORT_PID}, killing..."
+  kill "${PORT_PID}" > /dev/null 2>&1 || true
+  sleep 0.5
+done
 
 echo "Starting Kageyomi frontend on http://127.0.0.1:3000 ..."
 (
   cd "${FRONTEND_DIR}"
-  nohup npm run dev -- --force >"${LOG_DIR}/frontend.log" 2>&1 &
-  echo $! >"${PID_DIR}/frontend.pid"
+  nohup npm run dev -- --force > "${LOG_DIR}/frontend.log" 2>&1 &
+  echo $! > "${PID_DIR}/frontend.pid"
 )
 
-for _ in {1..30}; do
-  if curl -sf http://127.0.0.1:3000 >/dev/null 2>&1; then
+for _ in {1..40}; do
+  if curl -sf http://127.0.0.1:3000 > /dev/null 2>&1; then
     break
   fi
   sleep 1
 done
 
-if ! curl -sf http://127.0.0.1:3000 >/dev/null 2>&1; then
+if ! curl -sf http://127.0.0.1:3000 > /dev/null 2>&1; then
   echo "Kageyomi frontend did not become healthy. Check ${LOG_DIR}/frontend.log" >&2
   exit 1
 fi

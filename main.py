@@ -40,7 +40,7 @@ app.add_middleware(
 )
 
 DEFAULT_MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
-DEFAULT_AGENT = "FullGraph"
+DEFAULT_AGENT = "Auto"
 
 
 class AgentRequest(BaseModel):
@@ -86,6 +86,7 @@ def _response_payload(
     report: dict[str, Any],
     reasoning_steps: list[str],
     active_agents: list[str],
+    detected_intent: str | None,
 ) -> dict[str, Any]:
     return {
         "jobId": job_id,
@@ -106,6 +107,8 @@ def _response_payload(
         "reasoning_steps": reasoning_steps,
         "activeAgents": active_agents,
         "active_agents": active_agents,
+        "detectedIntent": detected_intent,
+        "detected_intent": detected_intent,
         "matched": None,
     }
 
@@ -207,6 +210,7 @@ async def execute_agent(req: AgentRequest) -> dict[str, Any]:
             report=report,
             reasoning_steps=list(final_state.get("reasoning_steps") or []),
             active_agents=list(final_state.get("active_agents") or []),
+            detected_intent=str(final_state.get("detected_intent") or ""),
         )
     except Exception as exc:
         logger.exception("UAVP execute failed")

@@ -1,0 +1,15 @@
+[
+  {
+    "jobId": "0xc3bd9d1d7a394c80bac84446281c3c7e",
+    "toolName": "fetch_btc_treasury_history",
+    "toolCallId": "fetch_btc_treasury_history-1778658271008",
+    "toolArgumentsJson": "{\"limit\":5}",
+    "paramsHash": "0xa03c8657a575356de5937110fc9038dafa42d659089628586aa8f8d73924cd16",
+    "responseHash": "0x33b407b51d14c1bc6f8f04be3a4dcd001c81566098d6cb01db516a5c615b2523",
+    "dataType": "json",
+    "canonicalData": "[{\"acq_cost\":\"43000000\",\"avg_btc_cost\":0.09,\"btc_acq\":\"535\",\"btc_holding\":\"818869\",\"date\":\"2026-05-11\",\"ticker\":\"MSTR\"},{\"acq_cost\":\"255000000\",\"avg_btc_cost\":0.09,\"btc_acq\":\"3273\",\"btc_holding\":\"818334\",\"date\":\"2026-04-27\",\"ticker\":\"MSTR\"},{\"acq_cost\":\"2540000000\",\"avg_btc_cost\":0.09,\"btc_acq\":\"34164\",\"btc_holding\":\"815061\",\"date\":\"2026-04-20\",\"ticker\":\"MSTR\"},{\"acq_cost\":\"1000000000\",\"avg_btc_cost\":0.1,\"btc_acq\":\"13927\",\"btc_holding\":\"780897\",\"date\":\"2026-04-13\",\"ticker\":\"MSTR\"},{\"acq_cost\":\"329900000\",\"avg_btc_cost\":0.1,\"btc_acq\":\"4871\",\"btc_holding\":\"766970\",\"date\":\"2026-04-06\",\"ticker\":\"MSTR\"}]",
+    "timestampMs": 1778658271008,
+    "receiptHash": "0x34f29637f4bfd1b6cb7c0b8aded19bff22499d0526b1251e75c5ed1b0d318053",
+    "signature": "da650041ac5b11a9a7dd236ee8d9a80d276000f8743d090560431231ae6940595ca60912f68e7c99111c4ef3c8b5dd8b04464ceca6e8f984bb7c0eb70e97bc6c1c"
+  }
+]

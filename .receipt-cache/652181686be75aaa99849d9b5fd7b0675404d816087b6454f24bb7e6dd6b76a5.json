@@ -1,0 +1,14 @@
+[
+  {
+    "jobId": "0xdc7ef6174d1240549a1f42c36176f84c",
+    "toolName": "fetch_news_search",
+    "toolCallId": "fetch_news_search-1778658051206",
+    "toolArgumentsJson": "{\"category\":1,\"keyword\":\"BTC\",\"page_size\":10}",
+    "paramsHash": "0x2abae72c149ad3a71743f0582406ea148c4837eea631bc02c7c64bb56c483518",
+    "responseHash": "0x25d4f43b43e453a5279c9ff49c7aaed079f3e708f70738766e64e30ce680900a",
+    "dataType": "text",
+    "canonicalData": "{'list': [{'title': 'bitcoin market sentiment improves', 'content': 'bullish positioning expands as traders rotate into btc.'}, {'title': 'crypto desks report steady btc demand', 'content': 'institutional demand remains constructive with positive flow signals.'}]}",
+    "timestampMs": 1778658051206,
+    "receiptHash": "0x0b32cfbafc47eed82f2f46100366b970bd3e17423eb31089f35f3ac32e0522d5"
+  }
+]

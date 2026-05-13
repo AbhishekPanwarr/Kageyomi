@@ -63,19 +63,17 @@ async def post_receipts_to_ipfs(receipts: list) -> str:
 
     payload = json.dumps(receipts).encode("utf-8")
     files = {"file": ("kageyomi-receipts.json", payload)}
-    data = {"network": "public", "name": "kageyomi-receipts.json"}
     
     async with httpx.AsyncClient() as client:
         res = await client.post(
-            "https://uploads.pinata.cloud/v3/files",
+            "https://api.pinata.cloud/pinning/pinFileToIPFS",
             headers={"Authorization": f"Bearer {pinata_jwt}"},
-            data=data,
             files=files,
-            timeout=30.0
+            timeout=60.0
         )
         res.raise_for_status()
         resp_data = res.json()
-        cid = resp_data.get("data", {}).get("cid")
+        cid = resp_data.get("IpfsHash")
         if not cid:
             raise ValueError(f"IPFS receipt upload returned no CID: {resp_data}")
         _persist_receipts_locally(cid, receipts)

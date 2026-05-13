@@ -1,0 +1,74 @@
+[
+  {
+    "jobId": "0x86fc26dc03764dd5bd93f8efea5475ef",
+    "toolName": "fetch_ETF_summary_history",
+    "toolCallId": "fetch_ETF_summary_history-1778658716499",
+    "toolArgumentsJson": "{\"country_code\":\"US\",\"limit\":7,\"symbol\":\"BTC\"}",
+    "paramsHash": "0x243b6258543c5c8ee1db021f91e30d24ee2219feb885b5c0c271fd3b5fe166dd",
+    "responseHash": "0x709306b195054da60ade59e2fec8a070c5320c0e668cc9ace8089fab3f348959",
+    "dataType": "json",
+    "canonicalData": "[{\"date\":\"2026-05-10\",\"total_net_inflow\":125000000.0},{\"date\":\"2026-05-09\",\"total_net_inflow\":80000000.0}]",
+    "timestampMs": 1778658716499,
+    "receiptHash": "0x51aff57b4393b3b0936370cbae2dfe0254695c481190e58c6915cf274ed7ba1f"
+  },
+  {
+    "jobId": "0x86fc26dc03764dd5bd93f8efea5475ef",
+    "toolName": "fetch_index_market_snapshot",
+    "toolCallId": "fetch_index_market_snapshot-1778658716499",
+    "toolArgumentsJson": "{}",
+    "paramsHash": "0x44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "responseHash": "0xeb7af6ed6727cf20cf819128a6480f263ffbd8c997a64eaeda98d42a6cad2ddd",
+    "dataType": "json",
+    "canonicalData": "{\"1month_roi\":12.0,\"24h_change_pct\":1.25,\"7day_roi\":4.5}",
+    "timestampMs": 1778658716499,
+    "receiptHash": "0xbeebffd9e1a632e26f0cc4226b9f6d3f49c55391d1f61bea0942d03b5577d91a"
+  },
+  {
+    "jobId": "0x86fc26dc03764dd5bd93f8efea5475ef",
+    "toolName": "fetch_macro_history",
+    "toolCallId": "fetch_macro_history-1778658716499",
+    "toolArgumentsJson": "{\"limit\":5}",
+    "paramsHash": "0xa03c8657a575356de5937110fc9038dafa42d659089628586aa8f8d73924cd16",
+    "responseHash": "0x165178c19aa56b2a1a20c2df373e1a10869462be5e276b0f91907714d4d28f0d",
+    "dataType": "json",
+    "canonicalData": "[{\"actual\":3.1,\"date\":\"2026-05-08\",\"forecast\":3.0}]",
+    "timestampMs": 1778658716499,
+    "receiptHash": "0xd9eea1e3868a0f0ae6ad660c6a686e89aeb8bd9204b36e00e113bdbed22679fe"
+  },
+  {
+    "jobId": "0x86fc26dc03764dd5bd93f8efea5475ef",
+    "toolName": "fetch_news_search",
+    "toolCallId": "fetch_news_search-1778658716499",
+    "toolArgumentsJson": "{\"category\":1,\"keyword\":\"BTC ETF\",\"page_size\":10}",
+    "paramsHash": "0x31c07399bde3ed41ed32cac2fca75066735cc2ebf1a74ff0e5fa280a405db712",
+    "responseHash": "0x56a0e84400b2a12dc0351eb0ce19e058cb865f97d498a22a82a3407e79e4f67e",
+    "dataType": "json",
+    "canonicalData": "{\"list\":[{\"content\":\"Bullish demand and sustained institutional inflow continue.\",\"title\":\"BTC ETF inflow hits record highs\"},{\"content\":\"Positive sentiment grows as ETF products attract capital.\",\"title\":\"Analysts see approval momentum building\"}]}",
+    "timestampMs": 1778658716499,
+    "receiptHash": "0xe152fd053a378aa571feca0fa50b33a888962036565cf69a83fb906ce88ecc7f"
+  },
+  {
+    "jobId": "0x86fc26dc03764dd5bd93f8efea5475ef",
+    "toolName": "fetch_btc_treasury_history",
+    "toolCallId": "fetch_btc_treasury_history-1778658716499",
+    "toolArgumentsJson": "{\"limit\":5}",
+    "paramsHash": "0xa03c8657a575356de5937110fc9038dafa42d659089628586aa8f8d73924cd16",
+    "responseHash": "0x62c53ec8c58e56fc3322682056940cd0ff462990455e367a8ff258e8bf857e93",
+    "dataType": "json",
+    "canonicalData": "[{\"btc_acq\":3015,\"btc_holding\":214000,\"date\":\"2026-05-01\"}]",
+    "timestampMs": 1778658716499,
+    "receiptHash": "0xb159911f7e9fddbed316ee2bdcb0483a7cb588dfa3054fb4438ebaf60502632f"
+  },
+  {
+    "jobId": "0x86fc26dc03764dd5bd93f8efea5475ef",
+    "toolName": "fetch_fundraising_projects",
+    "toolCallId": "fetch_fundraising_projects-1778658716499",
+    "toolArgumentsJson": "{}",
+    "paramsHash": "0x44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "responseHash": "0x201da606ae57346eab0fd28d8e2a065100bac7fc04cdfd6e5a091182321a67d0",
+    "dataType": "json",
+    "canonicalData": "[{\"project_name\":\"Project A\"},{\"project_name\":\"Project B\"},{\"project_name\":\"Project C\"}]",
+    "timestampMs": 1778658716499,
+    "receiptHash": "0xd2d5643c40e7fa36606d3b88d36046a50dca560f4d2d8df325cd42ea92431cfc"
+  }
+]

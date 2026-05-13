@@ -1,0 +1,15 @@
+[
+  {
+    "jobId": "0xae8dce1f1eb04167bc9ea166f4801c13",
+    "toolName": "fetch_macro_history",
+    "toolCallId": "fetch_macro_history-1778624415431",
+    "toolArgumentsJson": "{\"limit\":5}",
+    "paramsHash": "0xa03c8657a575356de5937110fc9038dafa42d659089628586aa8f8d73924cd16",
+    "responseHash": "0x4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "dataType": "json",
+    "canonicalData": "[]",
+    "timestampMs": 1778624415431,
+    "receiptHash": "0x743e90c39b0b8363faa74ee5de3976b4c4a6fc1588bb6fb8fe73af9d8b48c435",
+    "signature": "779500ca2f1929a35c746db74ccb87287b7615dc93b6f587382cf12354d3ffdf34338695708734f056c24ed70949f3ee8884ca564b247b4ed2059d656bb0942e1b"
+  }
+]

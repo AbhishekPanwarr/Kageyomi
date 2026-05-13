@@ -1,10 +1,13 @@
-import { BrowserRouter, Link, Outlet, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Link, NavLink, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import { Bell, Sparkles } from 'lucide-react'
+import { Bell, Home, Search, Bot, History, Briefcase, Settings, BookOpen, MessageSquare, ChevronRight } from 'lucide-react'
 
 import { HomePage } from './pages/HomePage'
 import { InferenceNewPage } from './pages/InferenceNewPage'
 import { InferenceStatusPage } from './pages/InferenceStatusPage'
+import { AgentsPage } from './pages/AgentsPage'
+import { HistoryPage } from './pages/HistoryPage'
+import { SettingsPage } from './pages/SettingsPage'
 import { Wave3Popup } from './components/Wave3Popup'
 import { truncateAddress } from './utils/helpers'
 
@@ -14,7 +17,7 @@ function Placeholder({ title, subtitle }: { title: string, subtitle?: string }) 
   return (
     <div className="flex flex-col items-center justify-center py-32 text-center text-white">
       <h1 className="mb-3 text-3xl font-bold">{title}</h1>
-      <p className="text-sm text-gray-400 max-w-lg mx-auto leading-relaxed">
+      <p className="text-sm text-zinc-400 max-w-lg mx-auto leading-relaxed">
         {subtitle || "This module is under development for the Wave 3 demo."}
       </p>
     </div>
@@ -31,18 +34,19 @@ function WalletBadge() {
   if (isConnected && address) {
     return (
       <button
-        className="rounded border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-center transition-colors hover:border-emerald-500/40 ml-4"
+        className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-center transition-colors hover:border-zinc-600 hover:bg-zinc-800"
         onClick={() => disconnect()}
         type="button"
       >
-        <span className="font-mono text-sm font-semibold text-emerald-400">{truncateAddress(address)}</span>
+        <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
+        <span className="font-mono text-xs font-semibold text-zinc-200">{truncateAddress(address)}</span>
       </button>
     )
   }
 
   return (
     <button
-      className="rounded border border-white/20 bg-white px-5 py-2 text-sm font-semibold text-black transition-colors hover:bg-gray-200 disabled:opacity-50 ml-4"
+      className="rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-1.5 text-xs font-semibold text-zinc-200 transition-colors hover:bg-zinc-800 disabled:opacity-50"
       disabled={!injectedConnector || isPending}
       onClick={() => {
         if (injectedConnector) {
@@ -56,132 +60,137 @@ function WalletBadge() {
   )
 }
 
-function Layout() {
+// Sidebar nav item for Kageyomi mode
+function SideNavItem({ to, icon: Icon, label, badge }: { to: string; icon: any; label: string; badge?: string }) {
+  return (
+    <NavLink
+      to={to}
+      end={to === '/'}
+      className={({ isActive }) =>
+        `flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${
+          isActive
+            ? 'bg-zinc-800 text-white font-medium'
+            : 'text-zinc-500 hover:bg-zinc-900 hover:text-zinc-300'
+        }`
+      }
+    >
+      <Icon className="w-4 h-4 shrink-0" />
+      <span className="flex-1">{label}</span>
+      {badge && (
+        <span className="rounded-full bg-zinc-700 px-1.5 py-0.5 text-[10px] font-semibold text-zinc-300 uppercase tracking-wide">
+          {badge}
+        </span>
+      )}
+    </NavLink>
+  )
+}
+
+function KageyomiSidebar() {
+  const { address, isConnected } = useAccount()
+  return (
+    <aside className="hidden lg:flex w-56 shrink-0 flex-col border-r border-zinc-800 bg-[#0d0d0d] h-screen sticky top-0">
+      {/* Logo */}
+      <div className="flex items-center gap-2 px-4 py-5 border-b border-zinc-800">
+        <div className="w-7 h-7 bg-white text-black flex items-center justify-center font-bold text-base rounded-sm shrink-0">K</div>
+        <span className="font-bold text-sm tracking-wider text-white">KAGEYOMI</span>
+      </div>
+
+      {/* Nav */}
+      <nav className="flex-1 space-y-0.5 px-2 py-4 overflow-y-auto">
+        <SideNavItem to="/" icon={Home} label="Home" />
+        <SideNavItem to="/inference/new" icon={Search} label="Research" />
+        <SideNavItem to="/agents" icon={Bot} label="Agents" badge="7 ACTIVE" />
+        <SideNavItem to="/history" icon={History} label="History" />
+        <SideNavItem to="/portfolio" icon={Briefcase} label="Portfolio" />
+        <SideNavItem to="/settings" icon={Settings} label="Settings" />
+      </nav>
+
+      {/* Bottom */}
+      <div className="border-t border-zinc-800 px-2 py-4 space-y-0.5">
+        <SideNavItem to="/docs" icon={BookOpen} label="Documentation" />
+        <SideNavItem to="/support" icon={MessageSquare} label="Support" />
+        <div className="mt-3 px-2 py-2 text-[10px] text-zinc-600">v1.0.0-beta</div>
+      </div>
+    </aside>
+  )
+}
+
+function KageyomiHeader() {
+  const { address, isConnected } = useAccount()
+  return (
+    <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-zinc-800 bg-[#0d0d0d]/90 backdrop-blur-md px-6">
+      <div className="flex items-center gap-4 text-xs text-zinc-400">
+        <span className="flex items-center gap-1.5">
+          <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
+          Mainnet
+        </span>
+        <span className="text-zinc-600">Gas: <span className="text-zinc-400">12 gwei</span></span>
+        <span className="flex items-center gap-1.5">
+          <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
+          SoSoValue API: Live
+        </span>
+      </div>
+      <div className="flex items-center gap-3">
+        <button className="relative p-1.5 text-zinc-500 hover:text-zinc-300 transition-colors" type="button">
+          <Bell className="w-4 h-4" />
+          <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-zinc-300 border border-[#0d0d0d]" />
+        </button>
+        <WalletBadge />
+      </div>
+    </header>
+  )
+}
+
+function KageyomiLayout() {
+  return (
+    <div className="flex min-h-screen bg-[#111111] text-white">
+      <Wave3Popup />
+      <KageyomiSidebar />
+      <div className="flex flex-1 flex-col min-w-0">
+        <KageyomiHeader />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  )
+}
+
+function BlindferenceLayout() {
   const location = useLocation()
-  const isKageyomiResearchRoute = KAGEYOMI_AGENT_MODE && location.pathname.startsWith('/inference')
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white/[0.12]">
       <Wave3Popup />
-
       <div className="flex min-h-screen overflow-hidden">
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 left-0 right-0 z-40 border-b border-zinc-800 bg-black/50 backdrop-blur-md">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
               <div className="flex items-center gap-2">
                 <Link className="flex items-center gap-2" to="/">
-                  <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-bold text-xl rounded-sm">
-                    {KAGEYOMI_AGENT_MODE ? 'K' : 'B'}
-                  </div>
-                  <span className="font-semibold text-lg tracking-wide">{KAGEYOMI_AGENT_MODE ? 'KAGEYOMI' : 'BLINDFERENCE'}</span>
+                  <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-bold text-xl rounded-sm">B</div>
+                  <span className="font-semibold text-lg tracking-wide">BLINDFERENCE</span>
                 </Link>
               </div>
-
               <nav className="hidden md:flex items-center gap-8 text-sm text-zinc-400">
-                {!KAGEYOMI_AGENT_MODE ? (
-                  <>
-                    <Link className="hover:text-white transition-colors" to="/">
-                      Home
-                    </Link>
-                    <Link className="hover:text-white transition-colors flex items-center gap-1.5" to="/models">
-                      Models
-                      <Sparkles className="w-3 h-3 text-emerald-500" />
-                    </Link>
-                    <Link className="hover:text-white transition-colors flex items-center gap-1.5" to="/nodes">
-                      Nodes
-                      <Sparkles className="w-3 h-3 text-emerald-500" />
-                    </Link>
-                    <Link className="hover:text-white transition-colors" to="/coverage">
-                      Coverage
-                    </Link>
-                    <Link className="hover:text-white transition-colors" to="/dashboard">
-                      Dashboard
-                    </Link>
-                  </>
-                ) : (
-                  <>
-                    <Link className="hover:text-white transition-colors" to="/">
-                      Home
-                    </Link>
-                    <Link className="hover:text-white transition-colors" to="/inference/new">
-                      Research
-                    </Link>
-                  </>
-                )}
+                <Link className="hover:text-white transition-colors" to="/">Home</Link>
+                <Link className="hover:text-white transition-colors" to="/models">Models</Link>
+                <Link className="hover:text-white transition-colors" to="/nodes">Nodes</Link>
+                <Link className="hover:text-white transition-colors" to="/coverage">Coverage</Link>
+                <Link className="hover:text-white transition-colors" to="/dashboard">Dashboard</Link>
               </nav>
-
-              <div className="flex items-center gap-4">
-                {KAGEYOMI_AGENT_MODE ? (
-                  <>
-                    <span className="hidden rounded-full border border-zinc-700/80 bg-black px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-zinc-300 sm:block">
-                      KAGEYOMI MODE
-                    </span>
-                    <button className="relative hidden p-2 text-zinc-400 hover:text-white transition-colors md:block" type="button">
-                      <Bell className="w-5 h-5" />
-                      <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-white border border-black" />
-                    </button>
-                  </>
-                ) : null}
-                <WalletBadge />
-              </div>
+              <WalletBadge />
             </div>
           </header>
-
           <main className="w-full flex-1">
             <Outlet />
           </main>
-
-          {!KAGEYOMI_AGENT_MODE ? (
-            <footer className="border-t border-zinc-800 py-12 px-6">
-              <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-500">
-                <p>© 2026 Blindference.</p>
-                <p>Powered by Fhenix CoFHE</p>
-              </div>
-            </footer>
-          ) : isKageyomiResearchRoute ? null : (
-            <footer className="border-t border-zinc-800 py-12 px-6">
-              <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-                <div>
-                  <h4 className="font-semibold mb-4 text-white">Product</h4>
-                  <ul className="space-y-2 text-sm text-zinc-400">
-                    <li><a className="hover:text-zinc-300" href="#">Features</a></li>
-                    <li><a className="hover:text-zinc-300" href="#">Agents</a></li>
-                    <li><a className="hover:text-zinc-300" href="#">Pricing</a></li>
-                    <li><a className="hover:text-zinc-300" href="#">API</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-4 text-white">Resources</h4>
-                  <ul className="space-y-2 text-sm text-zinc-400">
-                    <li><a className="hover:text-zinc-300" href="#">Documentation</a></li>
-                    <li><a className="hover:text-zinc-300" href="#">GitHub</a></li>
-                    <li><a className="hover:text-zinc-300" href="#">Demo</a></li>
-                    <li><a className="hover:text-zinc-300" href="#">Blog</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-4 text-white">Company</h4>
-                  <ul className="space-y-2 text-sm text-zinc-400">
-                    <li><a className="hover:text-zinc-300" href="#">About</a></li>
-                    <li><a className="hover:text-zinc-300" href="#">Contact</a></li>
-                    <li><a className="hover:text-zinc-300" href="#">Careers</a></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-4 text-white">Legal</h4>
-                  <ul className="space-y-2 text-sm text-zinc-400">
-                    <li><a className="hover:text-zinc-300" href="#">Privacy</a></li>
-                    <li><a className="hover:text-zinc-300" href="#">Terms</a></li>
-                    <li><a className="hover:text-zinc-300" href="#">Security</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div className="max-w-7xl mx-auto pt-8 border-t border-zinc-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-500">
-                <p>© 2026 Kageyomi.</p>
-                <p>Powered by Blindference × SoSoValue × Reineira</p>
-              </div>
-            </footer>
-          )}
+          <footer className="border-t border-zinc-800 py-12 px-6">
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-500">
+              <p>© 2026 Blindference.</p>
+              <p>Powered by Fhenix CoFHE</p>
+            </div>
+          </footer>
         </div>
       </div>
     </div>
@@ -192,16 +201,29 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />} path="/">
-          <Route element={<HomePage />} index />
-          <Route element={<Placeholder title="Model Marketplace" subtitle="This module will be added in upcoming waves." />} path="models" />
-          <Route element={<Placeholder title="Network Nodes" subtitle="Node visualization will be added in upcoming waves." />} path="nodes" />
-          <Route element={<InferenceNewPage />} path="inference/new" />
-          <Route element={<InferenceStatusPage />} path="inference/:requestId" />
-          <Route element={<Placeholder title="Inference Coverage" subtitle="Reineira settlement is under development from both blindference and reineira teams mutual side." />} path="coverage" />
-          <Route element={<Placeholder title="User Dashboard" />} path="dashboard" />
-          <Route element={<Placeholder title="Join the Network" subtitle="Node joining instructions will be added in upcoming waves." />} path="join-node" />
-        </Route>
+        {KAGEYOMI_AGENT_MODE ? (
+          <Route element={<KageyomiLayout />} path="/">
+            <Route element={<HomePage />} index />
+            <Route element={<InferenceNewPage />} path="inference/new" />
+            <Route element={<InferenceStatusPage />} path="inference/:requestId" />
+            <Route element={<AgentsPage />} path="agents" />
+            <Route element={<HistoryPage />} path="history" />
+            <Route element={<Placeholder title="Portfolio" subtitle="Under build for upcoming waves." />} path="portfolio" />
+            <Route element={<SettingsPage />} path="settings" />
+            <Route element={<Placeholder title="Documentation" />} path="docs" />
+            <Route element={<Placeholder title="Support" />} path="support" />
+          </Route>
+        ) : (
+          <Route element={<BlindferenceLayout />} path="/">
+            <Route element={<HomePage />} index />
+            <Route element={<Placeholder title="Model Marketplace" subtitle="This module will be added in upcoming waves." />} path="models" />
+            <Route element={<Placeholder title="Network Nodes" subtitle="Node visualization will be added in upcoming waves." />} path="nodes" />
+            <Route element={<InferenceNewPage />} path="inference/new" />
+            <Route element={<InferenceStatusPage />} path="inference/:requestId" />
+            <Route element={<Placeholder title="Inference Coverage" subtitle="Reineira settlement is under development." />} path="coverage" />
+            <Route element={<Placeholder title="User Dashboard" />} path="dashboard" />
+          </Route>
+        )}
       </Routes>
     </BrowserRouter>
   )

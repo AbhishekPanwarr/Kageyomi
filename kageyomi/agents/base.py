@@ -13,7 +13,7 @@ async def uavp_tool_call(job_id: str, tool_name: str, endpoint: str, params: dic
     raw_data = await client.get(endpoint, params)
     
     # Canonicalize
-    data_type = "text" if "news" in tool_name.lower() else "json"
+    data_type = "json"
     canonical_data = canonicalize_soso_response(raw_data, data_type)
     
     # Receipt

@@ -6,7 +6,10 @@ class AgentState(TypedDict, total=False):
     symbol: str
     job_id: str
     selected_agent: str
+    detected_intent: str
+    primary_agent: str
     active_agents: list[str]
+    intent_scores: dict[str, int]
     model_cid: str
     max_tools: int
     news_keyword: str

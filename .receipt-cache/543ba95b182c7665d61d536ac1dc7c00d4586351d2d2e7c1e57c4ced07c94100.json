@@ -1,0 +1,14 @@
+[
+  {
+    "jobId": "0x2f049f76330443dfbd7d7c0a9855d644",
+    "toolName": "fetch_btc_treasury_history",
+    "toolCallId": "fetch_btc_treasury_history-1778658051208",
+    "toolArgumentsJson": "{\"limit\":5}",
+    "paramsHash": "0xa03c8657a575356de5937110fc9038dafa42d659089628586aa8f8d73924cd16",
+    "responseHash": "0x62c53ec8c58e56fc3322682056940cd0ff462990455e367a8ff258e8bf857e93",
+    "dataType": "json",
+    "canonicalData": "[{\"btc_acq\":3015,\"btc_holding\":214000,\"date\":\"2026-05-01\"}]",
+    "timestampMs": 1778658051208,
+    "receiptHash": "0x79ab075cbcccb7a29b3fa438818e3a5ed74181e1291edd1000947ab878d984cf"
+  }
+]

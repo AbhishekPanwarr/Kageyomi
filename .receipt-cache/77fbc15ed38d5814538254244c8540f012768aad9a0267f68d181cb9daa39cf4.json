@@ -1,0 +1,74 @@
+[
+  {
+    "jobId": "0xad0a4f28a821453ea9c07c57289b84e1",
+    "toolName": "fetch_ETF_summary_history",
+    "toolCallId": "fetch_ETF_summary_history-1778657963386",
+    "toolArgumentsJson": "{\"country_code\":\"US\",\"limit\":7,\"symbol\":\"BTC\"}",
+    "paramsHash": "0x243b6258543c5c8ee1db021f91e30d24ee2219feb885b5c0c271fd3b5fe166dd",
+    "responseHash": "0x709306b195054da60ade59e2fec8a070c5320c0e668cc9ace8089fab3f348959",
+    "dataType": "json",
+    "canonicalData": "[{\"date\":\"2026-05-10\",\"total_net_inflow\":125000000.0},{\"date\":\"2026-05-09\",\"total_net_inflow\":80000000.0}]",
+    "timestampMs": 1778657963386,
+    "receiptHash": "0xed4e5b46b09756ca6f98896a7ab21d3a8abecc4291ef28433df828a8a2a7acbf"
+  },
+  {
+    "jobId": "0xad0a4f28a821453ea9c07c57289b84e1",
+    "toolName": "fetch_index_market_snapshot",
+    "toolCallId": "fetch_index_market_snapshot-1778657963386",
+    "toolArgumentsJson": "{}",
+    "paramsHash": "0x44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "responseHash": "0xeb7af6ed6727cf20cf819128a6480f263ffbd8c997a64eaeda98d42a6cad2ddd",
+    "dataType": "json",
+    "canonicalData": "{\"1month_roi\":12.0,\"24h_change_pct\":1.25,\"7day_roi\":4.5}",
+    "timestampMs": 1778657963386,
+    "receiptHash": "0x23a4434f8676f91525f1be030154a0d974dc56b5b01ae89142be5f28cff617a0"
+  },
+  {
+    "jobId": "0xad0a4f28a821453ea9c07c57289b84e1",
+    "toolName": "fetch_macro_history",
+    "toolCallId": "fetch_macro_history-1778657963386",
+    "toolArgumentsJson": "{\"limit\":5}",
+    "paramsHash": "0xa03c8657a575356de5937110fc9038dafa42d659089628586aa8f8d73924cd16",
+    "responseHash": "0x165178c19aa56b2a1a20c2df373e1a10869462be5e276b0f91907714d4d28f0d",
+    "dataType": "json",
+    "canonicalData": "[{\"actual\":3.1,\"date\":\"2026-05-08\",\"forecast\":3.0}]",
+    "timestampMs": 1778657963386,
+    "receiptHash": "0x6fae6f6068f18a828b22bc1982cfc6f73de8bc6780b12f5e17060a6b61df27a9"
+  },
+  {
+    "jobId": "0xad0a4f28a821453ea9c07c57289b84e1",
+    "toolName": "fetch_news_search",
+    "toolCallId": "fetch_news_search-1778657963386",
+    "toolArgumentsJson": "{\"category\":1,\"keyword\":\"BTC ETF\",\"page_size\":10}",
+    "paramsHash": "0x31c07399bde3ed41ed32cac2fca75066735cc2ebf1a74ff0e5fa280a405db712",
+    "responseHash": "0xfb812a4e15958588aabc8fd500e5da2708dcc922111cc0fa7b32b973e476aad1",
+    "dataType": "text",
+    "canonicalData": "{'list': [{'title': 'btc etf inflow hits record highs', 'content': 'bullish demand and sustained institutional inflow continue.'}, {'title': 'analysts see approval momentum building', 'content': 'positive sentiment grows as etf products attract capital.'}]}",
+    "timestampMs": 1778657963386,
+    "receiptHash": "0x06c45d3910cbb0a98983118731d25ee9a8d2f8f334f48ac164d9c843f456ce46"
+  },
+  {
+    "jobId": "0xad0a4f28a821453ea9c07c57289b84e1",
+    "toolName": "fetch_btc_treasury_history",
+    "toolCallId": "fetch_btc_treasury_history-1778657963386",
+    "toolArgumentsJson": "{\"limit\":5}",
+    "paramsHash": "0xa03c8657a575356de5937110fc9038dafa42d659089628586aa8f8d73924cd16",
+    "responseHash": "0x62c53ec8c58e56fc3322682056940cd0ff462990455e367a8ff258e8bf857e93",
+    "dataType": "json",
+    "canonicalData": "[{\"btc_acq\":3015,\"btc_holding\":214000,\"date\":\"2026-05-01\"}]",
+    "timestampMs": 1778657963386,
+    "receiptHash": "0x790926739945446ad356ca538b3b5db610b3c7a5d97f79ddb127d2deba9f0fa8"
+  },
+  {
+    "jobId": "0xad0a4f28a821453ea9c07c57289b84e1",
+    "toolName": "fetch_fundraising_projects",
+    "toolCallId": "fetch_fundraising_projects-1778657963387",
+    "toolArgumentsJson": "{}",
+    "paramsHash": "0x44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "responseHash": "0x201da606ae57346eab0fd28d8e2a065100bac7fc04cdfd6e5a091182321a67d0",
+    "dataType": "json",
+    "canonicalData": "[{\"project_name\":\"Project A\"},{\"project_name\":\"Project B\"},{\"project_name\":\"Project C\"}]",
+    "timestampMs": 1778657963387,
+    "receiptHash": "0x0a3c74d47c45c477222f9ac0de04c70d2f186a99497664f8c5189ccab089461a"
+  }
+]

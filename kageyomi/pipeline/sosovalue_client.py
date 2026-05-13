@@ -3,6 +3,7 @@ import json
 import httpx
 import os
 import time
+from pathlib import Path
 from typing import Any
 
 class SoSoValueClient:
@@ -10,9 +11,12 @@ class SoSoValueClient:
         self.api_key = os.getenv("SOSOVALUE_API_KEY", "")
         self.base_url = os.getenv("SOSO_BASE_URL", "https://openapi.sosovalue.com/openapi/v1")
         self.requests_per_minute = int(os.getenv("SOSO_REQUESTS_PER_MINUTE", "10"))
+        self.use_mock = os.getenv("KAGEYOMI_USE_MOCK_SOSO", "false").lower() == "true"
+        self.mock_file = os.getenv("SOSOVALUE_MOCK_FILE", "mock-sosovalue-responses.json")
         self.lock = asyncio.Lock()
         self.request_times = []
         self.cache: dict[str, tuple[Any, float]] = {}
+        self._mock_cache: dict[str, Any] | None = None
     
     async def _wait_rate_limit(self):
         async with self.lock:
@@ -31,6 +35,10 @@ class SoSoValueClient:
             params = {}
         if not endpoint.startswith("/"):
             endpoint = f"/{endpoint}"
+
+        if self.use_mock:
+            return self._load_mock_response(endpoint, params)
+
         if not self.api_key:
             raise ValueError("SOSOVALUE_API_KEY is not configured")
         
@@ -61,3 +69,25 @@ class SoSoValueClient:
                 return data
             res.raise_for_status()
         return {}
+
+    def _load_mock_response(self, endpoint: str, params: dict[str, Any]) -> dict[str, Any]:
+        if self._mock_cache is None:
+            mock_path = Path(self.mock_file)
+            if not mock_path.is_absolute():
+                mock_path = Path.cwd() / mock_path
+            if not mock_path.exists():
+                raise FileNotFoundError(f"Mock SoSoValue file not found: {mock_path}")
+            self._mock_cache = json.loads(mock_path.read_text(encoding="utf-8"))
+
+        key = self._mock_key(endpoint, params)
+        if key not in self._mock_cache:
+            raise KeyError(f"Missing mock SoSoValue response for key: {key}")
+        payload = self._mock_cache[key]
+        return payload if isinstance(payload, dict) else {"data": payload}
+
+    @staticmethod
+    def _mock_key(endpoint: str, params: dict[str, Any]) -> str:
+        if not params:
+            return endpoint
+        serialized = "&".join(f"{key}={params[key]}" for key in sorted(params))
+        return f"{endpoint}?{serialized}"
