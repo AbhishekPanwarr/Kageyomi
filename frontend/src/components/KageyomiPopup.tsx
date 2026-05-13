@@ -59,17 +59,17 @@ export function KageyomiPopup() {
               </h2>
               
               <p className="mb-10 text-zinc-400 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Kageyomi pairs specialist crypto research agents with Fhenix confidential inferencing, giving you private execution, replayable market-data receipts, and a sharper research workflow.
+                Kageyomi transforms SoSoValue's institutional market data into actionable intelligence through a network of 7 specialized AI agents, secured by Fhenix confidential execution and verifiable quorum settlements.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                 <div className="flex items-start gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
                   <div className="rounded border border-zinc-500/20 bg-zinc-500/10 p-3 mt-1 text-white">
-                    <LockKeyhole className="h-5 w-5" />
+                    <Monitor className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2 tracking-wide">1. Agentic Crypto Research</h4>
-                    <p className="text-sm text-zinc-500 leading-relaxed">Run specialist market agents for flows, macro, treasury behavior, narratives, indices, and venture activity instead of a single generic chatbot pass.</p>
+                    <h4 className="font-bold text-white mb-2 tracking-wide">1. SoSoValue Live Intelligence</h4>
+                    <p className="text-sm text-zinc-500 leading-relaxed">Power your research with direct access to SoSoValue's premium data APIs—tracking ETF flows, institutional treasuries, macro events, and VC fundraising in real-time.</p>
                   </div>
                 </div>
 
@@ -78,18 +78,8 @@ export function KageyomiPopup() {
                     <Network className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2 tracking-wide">2. Quorum-Verified Execution</h4>
-                    <p className="text-sm text-zinc-500 leading-relaxed">A leader executes the research path while verifier nodes replay the frozen receipt trace, ensuring the final thesis matches the exact evidence used in the run.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
-                  <div className="rounded border border-zinc-500/20 bg-zinc-500/10 p-3 mt-1 text-white">
-                    <Shield className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-white mb-2 tracking-wide">3. Fhenix Privacy Rail</h4>
-                    <p className="text-sm text-zinc-500 leading-relaxed">Prompts and outputs stay private under Fhenix CoFHE permissions, so you can research sensitive market ideas without leaking the thesis you are exploring.</p>
+                    <h4 className="font-bold text-white mb-2 tracking-wide">2. 7 Specialist Market Agents</h4>
+                    <p className="text-sm text-zinc-500 leading-relaxed">Instead of a generic chatbot, deploy specialized AI agents like FlowSentinel or MacroShield that analyze specific SoSoValue data streams to build a comprehensive market thesis.</p>
                   </div>
                 </div>
 
@@ -98,18 +88,28 @@ export function KageyomiPopup() {
                     <HardDrive className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2 tracking-wide">4. UAVP Receipt Trail</h4>
-                    <p className="text-sm text-zinc-500 leading-relaxed">Every live SoSoValue tool call is canonicalized, hashed, and stored as a receipt so the research run can be replayed from frozen evidence instead of drifting live APIs.</p>
+                    <h4 className="font-bold text-white mb-2 tracking-wide">3. UAVP Receipt Trail</h4>
+                    <p className="text-sm text-zinc-500 leading-relaxed">Every SoSoValue data point fetched is canonicalized, hashed, and stored as an immutable receipt, ensuring your research is based on verifiable evidence, not hallucinations.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
+                  <div className="rounded border border-zinc-500/20 bg-zinc-500/10 p-3 mt-1 text-white">
+                    <Shield className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-white mb-2 tracking-wide">4. Fhenix Confidential Execution</h4>
+                    <p className="text-sm text-zinc-500 leading-relaxed">Your prompts and proprietary research intents stay completely private under Fhenix CoFHE encryption, preventing alpha leakage during the research process.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors md:col-span-2">
                   <div className="rounded border border-zinc-500/20 bg-zinc-500/10 p-3 mt-1 text-white">
-                    <Monitor className="h-5 w-5" />
+                    <LockKeyhole className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2 tracking-wide">5. Research Terminal UX</h4>
-                    <p className="text-sm text-zinc-500 leading-relaxed max-w-3xl">The interface now centers on agent selection, research traces, and verifiable outputs, while keeping the privacy layer visible but secondary to the market workflow.</p>
+                    <h4 className="font-bold text-white mb-2 tracking-wide">5. Quorum-Verified Inference</h4>
+                    <p className="text-sm text-zinc-500 leading-relaxed max-w-3xl">A decentralized network of leader and verifier nodes replay the frozen SoSoValue receipts, mathematically guaranteeing the final output matches the exact data provided.</p>
                   </div>
                 </div>
               </div>
