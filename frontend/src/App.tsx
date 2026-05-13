@@ -11,7 +11,7 @@ import { SettingsPage } from './pages/SettingsPage'
 import { Wave3Popup } from './components/Wave3Popup'
 import { truncateAddress } from './utils/helpers'
 
-const KAGEYOMI_AGENT_MODE = import.meta.env.VITE_KAGEYOMI_AGENT_MODE === 'true'
+const KAGEYOMI_AGENT_MODE = import.meta.env.VITE_KAGEYOMI_AGENT_MODE !== 'false'
 
 function Placeholder({ title, subtitle }: { title: string, subtitle?: string }) {
   return (

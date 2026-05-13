@@ -13,7 +13,7 @@ import { encryptPromptKeyForTextRequest } from '../utils/textPromptKey'
 import { ChatView } from '../components/inference/ChatView'
 
 
-const KAGEYOMI_AGENT_MODE = import.meta.env.VITE_KAGEYOMI_AGENT_MODE === 'true'
+const KAGEYOMI_AGENT_MODE = import.meta.env.VITE_KAGEYOMI_AGENT_MODE !== 'false'
 
 const TEXT_MODEL_OPTIONS = {
   groq_llama_70b: { id: 'groq:llama-3.3-70b-versatile', label: 'Groq Llama 70B', provider: 'groq', model: 'llama-3.3-70b-versatile', description: 'Fast · Groq-hosted · Llama 70B' },

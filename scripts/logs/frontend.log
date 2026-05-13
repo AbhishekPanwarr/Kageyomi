@@ -7,3 +7,7 @@
   VITE v6.4.2  ready in 497 ms
 
   ➜  Local:   http://127.0.0.1:3000/
+1:17:12 AM [vite] (client) page reload src/components/inference/TextInferenceWizard.tsx
+1:17:14 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
+1:17:16 AM [vite] (client) hmr update /src/pages/HomePage.tsx, /src/index.css
+1:17:18 AM [vite] (client) hmr update /src/pages/InferenceNewPage.tsx, /src/index.css

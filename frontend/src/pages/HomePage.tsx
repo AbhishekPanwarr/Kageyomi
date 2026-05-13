@@ -6,7 +6,7 @@ import {
 import { useAccount } from 'wagmi';
 
 
-const KAGEYOMI_AGENT_MODE = import.meta.env.VITE_KAGEYOMI_AGENT_MODE === 'true'
+const KAGEYOMI_AGENT_MODE = import.meta.env.VITE_KAGEYOMI_AGENT_MODE !== 'false'
 
 const EXECUTION_STEPS = [
   'Query Encrypted',

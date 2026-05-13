@@ -29,7 +29,7 @@ const TEXT_MODEL_OPTIONS = {
 } as const
 
 type TextModelKey = keyof typeof TEXT_MODEL_OPTIONS
-const KAGEYOMI_AGENT_MODE = import.meta.env.VITE_KAGEYOMI_AGENT_MODE === 'true'
+const KAGEYOMI_AGENT_MODE = import.meta.env.VITE_KAGEYOMI_AGENT_MODE !== 'false'
 
 const KAGEYOMI_AGENTS = [
   'Auto',
