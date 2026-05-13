@@ -11,3 +11,6 @@
 1:17:14 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
 1:17:16 AM [vite] (client) hmr update /src/pages/HomePage.tsx, /src/index.css
 1:17:18 AM [vite] (client) hmr update /src/pages/InferenceNewPage.tsx, /src/index.css
+1:25:28 AM [vite] (client) hmr update /src/components/Wave3Popup.tsx, /src/index.css
+1:25:53 AM [vite] (client) hmr update /src/components/Wave3Popup.tsx, /src/index.css
+1:26:11 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
