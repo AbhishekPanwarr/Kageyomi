@@ -8,7 +8,7 @@ import { InferenceStatusPage } from './pages/InferenceStatusPage'
 import { AgentsPage } from './pages/AgentsPage'
 import { HistoryPage } from './pages/HistoryPage'
 import { SettingsPage } from './pages/SettingsPage'
-import { Wave3Popup } from './components/Wave3Popup'
+import { KageyomiPopup } from './components/KageyomiPopup'
 import { truncateAddress } from './utils/helpers'
 
 const KAGEYOMI_AGENT_MODE = import.meta.env.VITE_KAGEYOMI_AGENT_MODE !== 'false'
@@ -151,7 +151,7 @@ function KageyomiHeader() {
 function KageyomiLayout() {
   return (
     <div className="flex min-h-screen bg-[#111111] text-white">
-      <Wave3Popup />
+      <KageyomiPopup />
       <KageyomiSidebar />
       <div className="flex flex-1 flex-col min-w-0">
         <KageyomiHeader />
@@ -166,7 +166,7 @@ function KageyomiLayout() {
 function PublicLayout() {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white/[0.12]">
-      <Wave3Popup />
+      <KageyomiPopup />
       <div className="flex min-h-screen overflow-hidden">
         <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 left-0 right-0 z-40 border-b border-zinc-800 bg-black/50 backdrop-blur-md">
