@@ -1,527 +1,457 @@
-# Kageyomi
+<div align="center">
 
-Confidential crypto research on SoSoValue, powered by Fhenix-backed encrypted inference and UAVP verification.
+# 影 Kageyomi
 
-## Overview
+### Confidential Multi-Agent Crypto Research on Fhenix CoFHE
 
-Kageyomi is a confidential research terminal for crypto analysts.
+**Built for the [Reineira × Fhenix Buildathon](https://reineira.xyz/)**
 
-It lets a user:
+[![SoSoValue](https://img.shields.io/badge/SoSoValue-API-blue?style=flat-square)](https://sosovalue-1.gitbook.io/sosovalue-api-doc)
+[![Fhenix CoFHE](https://img.shields.io/badge/Fhenix-CoFHE-purple?style=flat-square)](https://cofhe-docs.fhenix.zone/)
+[![Reineira](https://img.shields.io/badge/Reineira-UAVP-orange?style=flat-square)](https://reineira.xyz/)
+[![Blindference](https://img.shields.io/badge/Blindference-Architecture-green?style=flat-square)](https://ivory-late-quokka-745.mypinata.cloud/ipfs/bafybeicnnfmvj6xt2w2dhvv6idfxje3fvtgu7ngbwmreknn53utneomezy)
 
-- submit an encrypted natural-language query
-- route that query through a leader-plus-verifier inference quorum
-- run SoSoValue-backed agent research without exposing the prompt in plaintext
-- freeze every external tool response into canonical receipts
-- replay the exact research context for deterministic verification
-- decrypt the final result locally after verification succeeds
+</div>
 
-The core problem Kageyomi solves is simple:
+---
 
-tool-using AI agents are hard to verify when they depend on live APIs, because different nodes can see slightly different data at different times.
+## What Is Kageyomi?
 
-Kageyomi solves this with UAVP:
+**Kageyomi** (影読み, *shadow-reading*) is a confidential, multi-agent crypto research platform designed for institutional-grade market intelligence. 
 
-- the leader canonicalizes every SoSoValue response
-- each tool call becomes a signed receipt
-- receipts are hashed into a Merkle root
-- the full receipt set is pinned to IPFS
-- verifiers replay from the frozen receipts, not from live API calls
+### The Problem: Alpha Leakage and Verifiability
+When funds or researchers use standard AI platforms to analyze markets, they face two critical issues:
+1. **Intent Leakage:** Querying an AI about specific on-chain movements, ETF flows, or accumulation patterns reveals proprietary trading intent to the service provider. 
+2. **Lack of Verifiability:** AI models hallucinate. In financial research, an AI's output is useless unless its data sources and execution path can be cryptographically proven.
 
-That makes confidential, tool-using inference reproducible enough for quorum verification.
+### The Solution: Kageyomi
+Kageyomi solves this by deploying a network of specialized AI agents within a cryptographically verifiable, privacy-preserving execution environment. It combines fully homomorphic encryption (Fhenix CoFHE) with on-chain verification (Reineira UAVP) and live market data (SoSoValue).
 
-## What We Built
+**How it works in practice:**
+Imagine an analyst investigating a potential market shift: *"Correlate recent MicroStrategy (MSTR) accumulation patterns with incoming macroeconomic data (CPI/FOMC) to assess near-term Bitcoin liquidity risk."*
 
-Kageyomi currently includes:
+1. **Confidential Submission:** The analyst's query is encrypted directly in their browser using AES-GCM. The decryption keys are secured via Fhenix CoFHE's on-chain ACL. The central infrastructure never sees the plaintext intent.
+2. **Specialized Agent Routing:** A decentralized leader node decrypts the prompt within a secure enclave and routes it to specific Kageyomi agents. *TreasuryRadar* fetches MSTR purchase history, while *MacroShield* analyzes upcoming CPI/FOMC events—both querying live SoSoValue data.
+3. **Provable Execution (UAVP):** Every data point fetched by the agents generates a cryptographically signed receipt. These receipts are hashed into a Merkle root and anchored on-chain.
+4. **Quorum Verification:** Independent verifier nodes fetch the frozen receipts from IPFS and deterministically replay the agent's synthesis. They guarantee the AI didn't hallucinate and only used the canonical SoSoValue data.
+5. **Private Delivery:** Once the quorum achieves consensus, the encrypted strategy report is returned to the analyst, where it is decrypted locally. 
 
-- a connected Kageyomi frontend in [frontend/](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/frontend)
-- a FastAPI UAVP agent service in [main.py](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/main.py)
-- a LangGraph-based multi-agent research pipeline in [kageyomi/pipeline/graph.py](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/kageyomi/pipeline/graph.py)
-- live SoSoValue integration with rate limiting in [kageyomi/pipeline/sosovalue_client.py](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/kageyomi/pipeline/sosovalue_client.py)
-- deterministic canonicalization in [kageyomi/uavp/canonicalize.py](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/kageyomi/uavp/canonicalize.py)
-- ToolReceipt hashing, signing, IPFS persistence, Merkle root generation, and trace hashing in [kageyomi/uavp/receipt_manager.py](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/kageyomi/uavp/receipt_manager.py)
-- a Fhenix-compatible metadata registry contract set in [contracts/kageyomi/src/](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/contracts/kageyomi/src)
-- local orchestration scripts in [scripts/](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/scripts)
+The result is proprietary crypto research with **provable integrity**: the insights are mathematically verifiable, untampered, and completely hidden from the network operators.
+
+---
+
+## Key Integrations
+
+| Layer | Technology | Role |
+|---|---|---|
+| **Data** | [SoSoValue API](https://sosovalue-1.gitbook.io/sosovalue-api-doc) | Live market data: ETF flows, BTC treasuries, macro events, indices, fundraising, news feeds |
+| **Privacy** | [Fhenix CoFHE](https://cofhe-docs.fhenix.zone/) | Fully Homomorphic Encryption — prompt encrypted in browser, key permissioned via on-chain ACL |
+| **Verification** | [Reineira / UAVP](https://reineira.xyz/) | On-chain proof of faithful agent execution via receipt Merkle roots and deterministic verifier replay |
+| **Quorum** | Blindference Wave 2 | 1 leader + 2 verifier node network for consensus-gated research delivery |
+
+---
+
+## The 7 Specialist Agents
+
+Kageyomi runs a coordinated pipeline of six specialist AI agents and one synthesis agent, each calling live SoSoValue data and producing cryptographically signed receipts.
+
+---
+
+### 🔍 Planner (Router)
+
+The entry point of every query. The **Planner** extracts structured intent from free-form natural language — detecting asset symbols (`BTC`, `ETH`, `SOL`), macro events (`CPI`, `FOMC`, `NFP`), treasury tickers (`MSTR`, `TSLA`, `COIN`), and topic keywords. It scores each specialist agent using intent matching, selects the optimal subset to activate, and wires up the parallel execution graph accordingly. In `Auto` mode it routes to the single best agent; in `FullGraph` mode it fans out to all six specialists simultaneously before synthesis.
+
+---
+
+### ⚡ FlowSentinel
+
+**SoSoValue endpoint:** `GET /etfs/summary-history`
+
+The ETF and institutional flow intelligence agent. FlowSentinel queries SoSoValue's Bitcoin ETF aggregate flow history — tracking daily net inflows and outflows across all US spot ETF products (BlackRock IBIT, Fidelity FBTC, and the broader ETF complex). It computes a 7-day net flow aggregate, identifies the directional bias (bullish / bearish / neutral), and surfaces the latest session inflow figure. This agent is the primary signal for detecting early institutional accumulation or distribution pressure before it appears in price.
+
+*Key insight produced:* ETF flow bias over the lookback window, net inflow in USD, latest session change.
+
+---
+
+### 📰 NarrativeScope
+
+**SoSoValue endpoint:** `GET /news/search`
+
+The sentiment and narrative intelligence agent. NarrativeScope queries SoSoValue's curated crypto news feed, analyzes headline and body text for sentiment polarity, and distills the dominant market narrative. It distinguishes between structural sentiment (long-running themes like regulatory clarity or ETF adoption) and noise (short-term FUD). This agent flags emerging narratives early — before they move markets — and scores the overall news sentiment as bullish, bearish, or neutral.
+
+*Key insight produced:* Dominant narrative theme, sentiment score, key headline signals.
+
+---
+
+### 🏛️ TreasuryRadar
+
+**SoSoValue endpoint:** `GET /btc-treasuries/{ticker}/purchase-history`
+
+The corporate Bitcoin accumulation tracker. TreasuryRadar queries historical BTC purchase records for public company treasuries — with MicroStrategy (MSTR) as the default, and TSLA, COIN, and HOOD also supported. It identifies ongoing accumulation campaigns, steady-hold behavior, or periods of inactivity. Corporate treasury activity is a leading indicator for institutional demand floors; TreasuryRadar surfaces whether the "whale of whales" is still buying and at what cadence.
+
+*Key insight produced:* Accumulation vs. steady-hold signal, recent purchase volume, trajectory.
+
+---
+
+### 📊 IndexArb
+
+**SoSoValue endpoint:** `GET /indices/{index_ticker}/market-snapshot`
+
+The relative-value and index performance agent. IndexArb queries SoSoValue's proprietary crypto index snapshots — including **SSI MAG7** (the seven largest crypto assets) and **SSI Layer1** (L1 blockchain performance index). It extracts performance metrics, 24-hour change figures, and cross-index relative value signals. This agent identifies sector rotation opportunities, overperforming or underperforming segments, and arbitrage-like divergences in the crypto capital stack.
+
+*Key insight produced:* Index performance bias, relative value signal vs. BTC, sector momentum.
+
+---
+
+### 🌐 MacroShield
+
+**SoSoValue endpoint:** `GET /macro/events/{event}/history`
+
+The macro event risk modeling agent. MacroShield queries SoSoValue's historical macro event series — CPI prints, FOMC decisions, and Non-Farm Payrolls — and models their observed impact on crypto volatility. It classifies each event's historical surprise factor (hawkish vs. dovish, above/below consensus), identifies upcoming scheduled risk events, and outputs a macro risk level that feeds into the final strategy recommendation. When CPI beats expectations or the Fed turns hawkish, MacroShield catches it first.
+
+*Key insight produced:* Macro surprise classification, risk level (low / medium / high), upcoming event flags.
+
+---
+
+### 🗺️ VentureMap
+
+**SoSoValue endpoint:** `GET /fundraising/projects`
+
+The venture capital and fundraising intelligence agent. VentureMap queries SoSoValue's fundraising project database to surface recent private rounds, active ecosystems, and capital flow trends in the crypto venture space. It identifies which sectors are attracting institutional VC attention (DePIN, RWA, L2s, AI × crypto), tracks token unlock schedules, and detects when VC sell pressure may be incoming. Early-stage funding activity is a leading indicator of ecosystem growth and future retail narrative.
+
+*Key insight produced:* Fundraising activity level, active sectors, VC sentiment signal.
+
+---
+
+### ⚒️ StrategyForge (Synthesis)
+
+The final synthesis agent. StrategyForge receives the canonical signals from all active specialist agents and composes a unified investment-grade research memo. Using **Groq llama-3.3-70b-versatile** for language synthesis, it produces a structured output with: a thesis statement, directional stance (bullish / bearish / neutral), a confidence score, supporting signals from each active agent, identified risk factors, and a recommended next step. This is the output that gets encrypted, committed on-chain, and returned to the user.
+
+---
 
 ## Architecture
 
-```text
-User Browser
-  -> AES-256-GCM encrypts the prompt locally
-  -> Prompt ciphertext is uploaded
-  -> Prompt key halves are protected with Fhenix CoFHE permissions
-  -> Confidential inference coordinator assigns:
-       1 leader + 2 verifiers
+### Parallel Agent Execution Graph
 
-Leader Node
-  -> Decrypts the prompt key through Fhenix permissions
-  -> Calls Kageyomi /uavp/execute
-  -> LangGraph planner activates the right research agents
-  -> Agents call SoSoValue endpoints
-  -> Every response is canonicalized into a UAVP receipt
-  -> StrategyForge synthesizes the final research memo
-  -> Leader computes:
-       outputHash
-       receiptRoot
-       receiptsCID
-       traceHash
+```mermaid
+graph TD
+    classDef primary fill:#111,stroke:#333,stroke-width:2px,color:#fff;
+    classDef agent fill:#0a0a0a,stroke:#00ff88,stroke-width:1px,color:#fff;
+    classDef output fill:#222,stroke:#fff,stroke-width:2px,color:#fff;
 
-Verifier Nodes
-  -> Fetch receipts from receiptsCID
-  -> Reconstruct the same signal state from frozen canonical receipts
-  -> Re-run StrategyForge synthesis
-  -> Compare replayed output hash to expected output hash
+    Planner["PLANNER (Router)<br/>• Extracts intent<br/>• Scores specialists<br/>• Selects subset"]:::primary
 
-On-Chain Metadata
-  -> receiptRoot
-  -> receiptsCID
-  -> traceHash
-  -> outputHash
+    FlowSentinel["FlowSentinel"]:::agent
+    NarrativeScope["NarrativeScope"]:::agent
+    TreasuryRadar["TreasuryRadar"]:::agent
+    IndexArb["IndexArb"]:::agent
+    MacroShield["MacroShield"]:::agent
+    VentureMap["VentureMap"]:::agent
 
-User Browser
-  -> Polls job state
-  -> Decrypts the verified result locally
+    StrategyForge["StrategyForge<br/>(LLM Synthesis)"]:::primary
+    Output(("Research Output")):::output
+
+    Planner --> FlowSentinel
+    Planner --> NarrativeScope
+    Planner --> TreasuryRadar
+    Planner --> IndexArb
+    Planner --> MacroShield
+    Planner --> VentureMap
+
+    FlowSentinel --> StrategyForge
+    NarrativeScope --> StrategyForge
+    TreasuryRadar --> StrategyForge
+    IndexArb --> StrategyForge
+    MacroShield --> StrategyForge
+    VentureMap --> StrategyForge
+
+    StrategyForge --> Output
 ```
 
-## Confidential Inference Stack
-
-Kageyomi uses Fhenix-compatible confidential inference primitives:
-
-- CoFHE-based key protection for prompt and output access
-- local AES-256-GCM prompt encryption
-- quorum-based leader/verifier execution
-- on-chain metadata anchoring for replay artifacts
-
-The frontend never sends plaintext prompt content over the network.
-
-The verifier path does not query live SoSoValue during replay.
-
-## UAVP Verification Model
-
-Each SoSoValue tool call is transformed into a deterministic receipt with:
-
-- `jobId`
-- `toolName`
-- `toolCallId`
-- `toolArgumentsJson`
-- `paramsHash`
-- `responseHash`
-- `canonicalData`
-- `dataType`
-- `timestampMs`
-- `receiptHash`
-- optional `signature`
-
-The receipt pipeline is:
-
-1. fetch live SoSoValue data
-2. strip ephemeral fields
-3. normalize floats
-4. serialize deterministically
-5. hash the canonical payload
-6. sign the receipt
-7. persist the full receipt list to IPFS and local cache
-8. compute `receiptRoot`
-9. compute `traceHash`
-
-Verifier replay reconstructs the final answer from the frozen receipt set rather than from live external data.
-
-## Research Modes and Agents
-
-Kageyomi exposes 7 research modes in the UI:
-
-1. `FullGraph`
-2. `FlowSentinel`
-3. `NarrativeScope`
-4. `TreasuryRadar`
-5. `IndexArb`
-6. `MacroShield`
-7. `VentureMap`
-
-Important note:
-
-- `FullGraph` is the orchestration mode
-- it activates the specialist agents in parallel and then passes their signals into `StrategyForge`
-- `StrategyForge` is the synthesis layer, not a separate UI mode
-
-### Agent Details
-
-#### `FullGraph`
-
-The default orchestration mode.
-
-It uses the planner to infer:
-
-- symbol
-- macro event
-- treasury ticker
-- news keyword
-- index ticker
-
-It then activates the relevant specialist agents and synthesizes one final memo.
-
-#### `FlowSentinel`
-
-Source: [kageyomi/agents/flow_sentinel.py](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/kageyomi/agents/flow_sentinel.py)
-
-Purpose:
-
-- institutional ETF flow analysis
-- directional bias from recent aggregate net inflow history
-
-SoSoValue endpoint:
-
-- `/etfs/summary-history`
-
-Output focus:
-
-- lookback flow bias
-- latest session inflow
-- ETF flow momentum
-
-#### `NarrativeScope`
-
-Source: [kageyomi/agents/others.py](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/kageyomi/agents/others.py)
-
-Purpose:
-
-- crypto news and narrative sentiment analysis
-
-SoSoValue endpoint:
-
-- `/news/search`
-
-Output focus:
-
-- article count
-- top headlines
-- positive / negative / neutral narrative bias
-
-#### `TreasuryRadar`
-
-Purpose:
-
-- public-company Bitcoin treasury tracking
-
-SoSoValue endpoint:
-
-- `/btc-treasuries/{ticker}/purchase-history`
-
-Output focus:
-
-- latest treasury purchase date
-- BTC acquired
-- total holdings
-- accumulation vs steady behavior
-
-#### `IndexArb`
-
-Purpose:
-
-- relative-value and index dislocation analysis
-
-SoSoValue endpoint:
-
-- `/indices/{index_ticker}/market-snapshot`
-
-Output focus:
-
-- 24h change
-- 7-day ROI
-- 1-month ROI
-- outperforming vs mixed regime
-
-#### `MacroShield`
-
-Purpose:
-
-- macro event surprise and risk interpretation
-
-SoSoValue endpoint:
-
-- `/macro/events/{event}/history`
-
-Output focus:
-
-- actual vs forecast surprise
-- macro risk level
-- event-driven caution signal
-
-#### `VentureMap`
-
-Purpose:
-
-- venture and fundraising intelligence
-
-SoSoValue endpoint:
-
-- `/fundraising/projects`
-
-Output focus:
-
-- visible fundraising activity
-- sample project set
-- current venture map summary
-
-#### `StrategyForge`
-
-Source: [kageyomi/agents/strategy_forge.py](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/kageyomi/agents/strategy_forge.py)
-
-Purpose:
-
-- synthesize specialist outputs into one structured research memo
-
-Runtime behavior:
-
-- uses Groq through `langchain_groq` when `GROQ_API_KEY` is present
-- falls back to a deterministic rule-based synthesis path when mocked
-
-Output shape:
-
-- `selectedAgent`
-- `activeAgents`
-- `stance`
-- `confidence`
-- `thesis`
-- `supportingSignals`
-- `risks`
-- `nextStep`
-
-## Supported SoSoValue Data Sources
-
-The current implementation integrates these SoSoValue surfaces:
-
-- ETF summary history
-- crypto news search
-- BTC treasury purchase history
-- SoSoValue index market snapshots
-- macro event history
-- fundraising projects
-
-The client is rate-limited to the SoSoValue demo constraint:
-
-- `SOSO_REQUESTS_PER_MINUTE=10`
-
-## API Surface
-
-The Kageyomi service exposes:
-
-### `POST /uavp/execute`
-
-Runs the selected research mode and returns:
-
-- output
-- output hash
-- receipt root
-- receipts CID
-- trace hash
-- receipts
-- reasoning steps
-- active agents
-
-### `POST /uavp/verify`
-
-Loads the frozen receipts, replays the synthesis step, and returns:
-
-- whether the replay matched
-- replayed output hash
-- active agents involved in replay
-
-### `GET /health`
-
-Basic service health check.
+Each specialist calls a live SoSoValue endpoint, canonicalizes the response (normalized JSON, stripped metadata, 6dp float rounding), and writes a signed **UAVP receipt** to the shared state before passing to StrategyForge.
+
+---
+
+### Confidential Execution Architecture
+
+```mermaid
+sequenceDiagram
+    participant User as Browser (User)
+    participant ICL as ICL (Coordinator)
+    participant Leader as Leader Node
+    participant Verifier as Verifier Nodes (x2)
+    participant Chain as Blockchain / IPFS
+
+    User->>User: 1. AES-GCM encrypt prompt
+    User->>Chain: 2. CoFHE key split & on-chain ACL
+    User->>ICL: 3. Upload encrypted blob
+    
+    ICL->>ICL: 4. Assign 1 leader + 2 verifiers
+    ICL->>Leader: 5. Push task
+    ICL->>Verifier: 5. Push task
+
+    Leader->>Chain: 6. CoFHE threshold decrypt
+    Leader->>Leader: 7. Run Kageyomi graph (Parallel Agents)
+    Leader->>Chain: 8. Upload Receipts to IPFS
+    Leader->>Leader: 9. Compute Merkle root & hashes
+    Leader->>ICL: 10. Commit results
+    Leader->>Chain: 11. (Optional) Post metadata on-chain
+
+    Verifier->>ICL: 12. Poll for leader result
+    Verifier->>Chain: 13a. Load frozen receipts from IPFS
+    Verifier->>Verifier: 13b. Deterministic replay & verify hash
+    Verifier->>ICL: 14. Post confirmation
+
+    ICL->>ICL: 15. 2/3 quorum reached (ACCEPTED)
+
+    User->>ICL: 16a. Poll status
+    User->>User: 16b. Decrypt locally & display
+```
+
+---
+
+### On-Chain Contracts (Arbitrum Sepolia)
+
+| Contract | Address | Purpose |
+|---|---|---|
+| `PrivateInferenceExtension` | `0x4df4557810d205c6ac4907ea17edcd0309e5314e` | Agent job commitment — anchors `receiptRoot`, `receiptsCID`, `traceHash`, `outputHash` on-chain |
+| `DisputeRegistry` | `0xffdea412c82938e5714e9c3de665e809ef53d674` | Handles disputed research job claims |
+| `OracleAdapter` | `0x1ecf80171f9a20f25a091de17bf5c3d4eb127347` | On-chain oracle interface for agent output anchoring |
+| `ExecutionCommitmentRegistry` | `0x925F42542b2a6b67D76B78b3BFe4127D50b8df81` | Blindference core: quorum execution commitments |
+| `PromptKeyStore` | `0x58F07E859555B89CEefDf106aDaA021021cC0580` | FHE key ACL — maps encrypted prompt handles to authorized node addresses |
+
+---
+
+### UAVP: Unified Agent Verification Protocol
+
+Every agent tool call produces a cryptographically signed **receipt**:
+
+```json
+{
+  "jobId":            "0x...",
+  "toolName":         "fetch_ETF_summary_history",
+  "toolCallId":       "...",
+  "toolArgumentsJson":"{ \"symbol\": \"BTC\", \"limit\": 7 }",
+  "paramsHash":       "0x...",
+  "responseHash":     "0x...",
+  "canonicalData":    "...",
+  "timestampMs":      1715600000000,
+  "receiptHash":      "0x..."
+}
+```
+
+All receipts are:
+1. **Canonicalized** — wrapper fields stripped, floats normalized to 6dp, keys sorted
+2. **Merkle-rooted** — `receipt_root = MerkleRoot(responseHash[])`
+3. **Trace-hashed** — `trace_hash = SHA256({promptHash, outputHash, receiptRoot, receiptsCID, model, toolCount})`
+4. **Stored on IPFS** via Pinata (with local cache for verifier replay without re-fetching)
+5. **Committed on-chain** via `PrivateInferenceExtension.postAgentCommitment()`
+
+Verifiers fetch the **same frozen receipts** by CID from IPFS, reconstruct agent signals from `canonicalData` only (no live API calls), re-run StrategyForge, and check `SHA256(replayed_output) == expected_output_hash`. If they match, the job is verified. This proves the leader did not fabricate or alter the research.
+
+---
 
 ## Repository Structure
 
-```text
+```
 Kageyomi/
-├── main.py                      # FastAPI entrypoint
+├── main.py                          # FastAPI service: /uavp/execute, /uavp/verify, /health
 ├── kageyomi/
 │   ├── agents/
-│   │   ├── base.py
-│   │   ├── flow_sentinel.py
-│   │   ├── others.py
-│   │   └── strategy_forge.py
+│   │   ├── base.py                  # UAVP tool call wrapper — calls SoSoValue + creates receipt
+│   │   ├── flow_sentinel.py         # FlowSentinel agent
+│   │   ├── others.py                # NarrativeScope, TreasuryRadar, IndexArb, MacroShield, VentureMap
+│   │   └── strategy_forge.py       # StrategyForge synthesis agent (Groq LLM)
 │   ├── pipeline/
-│   │   ├── graph.py
-│   │   └── sosovalue_client.py
-│   ├── uavp/
-│   │   ├── canonicalize.py
-│   │   └── receipt_manager.py
-│   └── state.py
-├── frontend/                    # connected Kageyomi UI
-├── contracts/kageyomi/          # metadata registry and dispute contracts
-├── scripts/                     # deploy/run/stop/status helpers
-└── docs/
+│   │   ├── graph.py                 # LangGraph StateGraph — parallel agent fan-out + intent routing
+│   │   ├── sosovalue_client.py      # SoSoValue HTTP client (rate limiting, cache, retry)
+│   │   └── state.py                 # AgentState TypedDict
+│   └── uavp/
+│       ├── canonicalize.py          # Response normalization for deterministic receipts
+│       └── receipt_manager.py       # Receipt creation, Merkle root, IPFS upload/download
+├── contracts/kageyomi/src/
+│   ├── PrivateInferenceExtension.sol
+│   ├── DisputeRegistry.sol
+│   └── OracleAdapter.sol
+├── frontend/                        # React + Vite chat UI (agent selection, chat history, UAVP panel)
+└── scripts/
+    ├── run-live-stack.sh            # Start full stack (agent + Blindference quorum + frontend)
+    └── stop-live-stack.sh
+
+blindference/wave2_network/
+├── packages/
+│   ├── icl/                         # Inference Coordination Layer (quorum orchestration)
+│   ├── node-reineira/               # Node runtime (leader + verifier roles, Kageyomi bridge)
+│   └── frontend/                    # Blindference base frontend (FHE prompt encryption)
+└── scripts/demo/
+    └── run-stack.sh                 # Start quorum stack
 ```
 
-## Contracts
+---
 
-The contract package currently includes:
+## Setup & Running
 
-- `PrivateInferenceExtension.sol`
-- `DisputeRegistry.sol`
-- `OracleAdapter.sol`
+### Prerequisites
 
-These contracts are used to anchor UAVP metadata and support dispute-oriented extensions for later phases.
-
-## Local Prerequisites
-
-Before running locally, make sure you have:
-
+- Python 3.12+
 - Node.js 20+
-- Python 3.11+
-- Foundry
-- a funded testnet wallet for deployment steps
-- a SoSoValue API key
-- a Groq API key
-- a Pinata JWT for IPFS receipt uploads
+- A wallet on Arbitrum Sepolia with testnet ETH
+- API keys (see `.env.example`)
 
-## Environment Setup
+### 1. Clone and set up the Blindference quorum stack
 
-Copy and fill:
-
-- [Kageyomi/.env.example](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/.env.example)
-- [Kageyomi/frontend/.env.example](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/frontend/.env.example)
-
-Minimum backend values:
-
-```env
-SOSOVALUE_API_KEY=...
-GROQ_API_KEY=...
-NODE_PRIVATE_KEY=...
-PINATA_JWT=...
-SOSO_REQUESTS_PER_MINUTE=10
-GROQ_MODEL=llama-3.3-70b-versatile
-```
-
-Minimum frontend values:
-
-```env
-VITE_ICL_API_URL=http://127.0.0.1:8000
-VITE_PROMPT_KEY_STORE_ADDRESS=0x...
-VITE_KAGEYOMI_EXTENSION_CONTRACT_ADDRESS=0x...
-VITE_KAGEYOMI_AGENT_MODE=true
-```
-
-## How To Run Locally
-
-### 1. Install frontend dependencies
+> Kageyomi depends on the Blindference Wave 2 node/ICL infrastructure. Clone it into the same parent directory:
 
 ```bash
-cd Kageyomi/frontend
-npm install
+# your workspace should look like:
+# dev/
+#   Kageyomi/
+#   blindference/wave2_network/
+
+cd blindference/wave2_network
+cp packages/icl/.env.example packages/icl/.env
+# Fill in: PINATA_JWT, ARBITRUM_SEPOLIA_RPC, node wallet private keys
 ```
 
-### 2. Install contract dependencies
-
-```bash
-cd Kageyomi/contracts/kageyomi
-npm install
-```
-
-### 3. Create the Python environment
+### 2. Set up the Kageyomi agent service
 
 ```bash
 cd Kageyomi
-python3 -m venv .venv
+
+# Create Python virtualenv
+python -m venv .venv
 source .venv/bin/activate
-pip install fastapi uvicorn httpx langgraph langchain-groq eth-account python-dotenv
+pip install -e ".[dev]"
+
+# Configure environment
+cp .env.example .env
 ```
 
-### 4. Deploy the local testnet stack
+**Required `.env` variables:**
 
-Use the deployment helper:
+```env
+# SoSoValue data API
+SOSOVALUE_API_KEY=your_key_here
+SOSO_BASE_URL=https://api.sosovalue.com
 
-```bash
-bash Kageyomi/scripts/deploy-fhenix-stack.sh
+# LLM (StrategyForge synthesis)
+GROQ_API_KEY=your_groq_key
+GROQ_MODEL=llama-3.3-70b-versatile
+
+# IPFS (receipt storage)
+PINATA_JWT=your_pinata_jwt
+PINATA_GATEWAY_URL=https://gateway.pinata.cloud/ipfs
+
+# Set false for live IPFS, true for local-only testing
+KAGEYOMI_MOCK_IPFS=false
+
+# Kageyomi on-chain contract (Arbitrum Sepolia)
+KAGEYOMI_EXTENSION_CONTRACT_ADDRESS=0x4df4557810d205c6ac4907ea17edcd0309e5314e
 ```
 
-### 5. Start the full local system
+### 3. Run the full live stack
 
 ```bash
+# From the dev/ root (parent of Kageyomi/ and blindference/)
 bash Kageyomi/scripts/run-live-stack.sh
 ```
 
 This starts:
-
-- Kageyomi frontend on `http://127.0.0.1:3000`
-- confidential inference coordinator on `http://127.0.0.1:8000`
-- Kageyomi UAVP service on `http://127.0.0.1:8001`
-- leader node
-- verifier 1 node
-- verifier 2 node
-
-### 6. Monitor or stop the stack
+| Service | URL |
+|---|---|
+| Kageyomi Agent Service | `http://127.0.0.1:8001` |
+| Blindference ICL | `http://127.0.0.1:8000` |
+| Leader Node | internal |
+| Verifier 1 | internal |
+| Verifier 2 | internal |
+| Kageyomi Frontend | `http://127.0.0.1:3000` |
 
 ```bash
-bash Kageyomi/scripts/status-live-stack.sh
+# Stop everything
 bash Kageyomi/scripts/stop-live-stack.sh
+
+# Check status
+bash Kageyomi/scripts/status-live-stack.sh
 ```
 
-## Standalone Agent Smoke Test
-
-If you want to validate the agent layer before running the full encrypted stack:
+### 4. Logs
 
 ```bash
-cd Kageyomi
-python3 -m uvicorn main:app --host 127.0.0.1 --port 8001
+# Agent execution log
+tail -f Kageyomi/scripts/logs/agent.log
+
+# ICL / quorum coordination
+tail -f blindference/wave2_network/scripts/demo/logs/icl.log
+
+# Node execution
+tail -f blindference/wave2_network/scripts/demo/logs/node-leader.log
+tail -f blindference/wave2_network/scripts/demo/logs/node-verifier1.log
+tail -f blindference/wave2_network/scripts/demo/logs/node-verifier2.log
 ```
 
-Then call:
+### 5. Standalone agent smoke test (without Blindference)
 
 ```bash
-curl -X POST http://127.0.0.1:8001/uavp/execute \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "prompt": "BTC ETF inflow vs CPI surprises and latest ETF news sentiment",
-    "agent": "FullGraph",
-    "model_cid": "llama-3.3-70b-versatile",
-    "max_tools": 6
-  }'
+# Start just the Kageyomi agent
+source .venv/bin/activate
+uvicorn main:app --port 8001 --reload
+
+# Test execute
+curl -X POST http://localhost:8001/uavp/execute \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "What do BTC ETF flows tell us about macro risk?", "agent": "FullGraph"}'
+
+# Verify (use receipts_cid from execute response)
+curl -X POST http://localhost:8001/uavp/verify \
+  -H "Content-Type: application/json" \
+  -d '{"receipts_cid": "...", "prompt": "...", "expected_output_hash": "..."}'
 ```
 
-## Frontend Flow
+---
 
-The Kageyomi frontend does the following:
+## How a Research Query Works: End to End
 
-- initializes the wallet and CoFHE client
-- encrypts the prompt locally
-- stores prompt key routing in `PromptKeyStore`
-- uploads the encrypted prompt blob
-- submits a confidential text research job
-- polls job status
-- displays UAVP metadata when available
-- decrypts the final answer locally
+1. **User opens** `http://127.0.0.1:3000`, connects MetaMask (Arbitrum Sepolia)
+2. **Types a query** e.g. *"Analyze MSTR accumulation pattern against macro risk"*
+3. **Browser encrypts** the prompt with AES-GCM; the key is split and permissioned via CoFHE on-chain ACL
+4. **ICL assigns** a leader + 2 verifiers from the registered node pool
+5. **Leader node** decrypts the prompt via CoFHE threshold network
+6. **Kageyomi graph executes:**
+   - Planner identifies: TreasuryRadar + MacroShield as primary agents
+   - Both run in parallel, each calling live SoSoValue endpoints
+   - Each call produces a UAVP receipt (canonicalized, hashed, signed)
+   - StrategyForge synthesizes signals into a structured research memo via Groq Llama 3.3
+7. **Receipts** are uploaded to IPFS via Pinata; `receipt_root`, `output_hash`, `trace_hash` computed
+8. **Leader commits** result to ICL; optionally anchors `AgentJobMetadata` on-chain
+9. **Verifiers** load frozen receipts by CID, replay deterministically, confirm `matched: true`
+10. **ICL accepts** the job (2/3 quorum)
+11. **Browser polls**, decrypts the output locally, renders the markdown research memo with UAVP proof panel
 
-## Logs
+---
 
-Kageyomi writes application logs to:
+## Architecture Paper
 
-- [Kageyomi/scripts/logs/](/home/abhieren/Drive/Projects/Buildathon/SoSoValue/dev/Kageyomi/scripts/logs)
+This project is built on the Blindference architecture — a verifiable inference quorum protocol developed for the Reineira × Fhenix Buildathon.
 
-The confidential inference coordinator and node processes also emit their own local demo logs when the full stack is launched through `run-live-stack.sh`.
+📄 **[Read the Blindference Architecture Paper](https://ivory-late-quokka-745.mypinata.cloud/ipfs/bafybeicnnfmvj6xt2w2dhvv6idfxje3fvtgu7ngbwmreknn53utneomezy)**
 
-## Current Implementation Status
+The paper describes the Unified Agent Verification Protocol (UAVP), the receipt Merkle commitment scheme, the frozen-context verifier replay mechanism, and the CoFHE threshold key permission model that Kageyomi implements as a production application layer.
 
-As of now, the implemented state includes:
+---
 
-- connected Kageyomi frontend
-- Fhenix-compatible encrypted prompt flow
-- live SoSoValue agent execution
-- LangGraph orchestration
-- UAVP canonical receipts
-- IPFS receipt persistence
-- deterministic verifier replay from frozen context
-- metadata hashing and anchoring contracts
-- local multi-node quorum run scripts
+## Acknowledgements
 
-## Notes
+- **[SoSoValue](https://sosovalue.com)** — for the comprehensive crypto market data API powering all six specialist agents
+- **[Fhenix](https://fhenix.zone)** — for CoFHE, enabling true on-chain FHE key permissioning for confidential AI inference
+- **[Reineira](https://reineira.xyz)** — for the UAVP verification framework and buildathon infrastructure
+- **[Groq](https://groq.com)** — for the ultra-low-latency LLM inference powering StrategyForge
+- **[Pinata](https://pinata.cloud)** — for decentralized IPFS receipt storage
+- **[LangGraph](https://github.com/langchain-ai/langgraph)** — for the parallel multi-agent state graph execution
 
-- `FullGraph` is the recommended default mode.
-- `KAGEYOMI_MOCK_GROQ=true` enables deterministic fallback synthesis.
-- `KAGEYOMI_MOCK_IPFS=true` stores receipt payloads locally instead of pinning.
-- `KAGEYOMI_USE_MOCK_SOSO=true` enables mock SoSoValue mode for demo-only testing.
+---
 
-## License / Project Status
+<div align="center">
 
-Kageyomi is currently a buildathon-stage confidential research system and should be treated as research infrastructure, not financial advice or production trading software.
+Built with 影 by the Kageyomi team · Reineira × Fhenix Buildathon 2026
+
+</div>
