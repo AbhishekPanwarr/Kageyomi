@@ -33,7 +33,7 @@ export async function storeEncryptedRiskInputsInVault({
   }
 
   if (encryptedInputs.length !== 4) {
-    throw new Error(`BlindferenceInputVault expects exactly 4 encrypted features, got ${encryptedInputs.length}.`)
+    throw new Error(`KageyomiInputVault expects exactly 4 encrypted features, got ${encryptedInputs.length}.`)
   }
 
   const [creditScore, loanAmount, accountAge, prevDefaults] = encryptedInputs

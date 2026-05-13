@@ -70,13 +70,13 @@ export function TextInferenceWizard() {
   const buttonLabel = useMemo(() => {
     switch (stage) {
       case 'encrypting':
-        return 'Encrypting Prompt...'
+        return 'Sealing Research Brief...'
       case 'uploading':
-        return 'Uploading to ICL...'
+        return 'Uploading Brief...'
       case 'submitting':
-        return KAGEYOMI_AGENT_MODE ? 'Assigning Quorum...' : 'Assigning Quorum...'
+        return 'Assigning Research Quorum...'
       default:
-        return KAGEYOMI_AGENT_MODE ? 'Run Confidential Research Job' : 'Run Confidential Text Inference'
+        return KAGEYOMI_AGENT_MODE ? 'Run Agent Research Job' : 'Run Private Inference'
     }
   }, [stage])
 
@@ -229,7 +229,7 @@ export function TextInferenceWizard() {
 
       <motion.div variants={itemVariants} className="space-y-3 relative">
         <div className="flex items-center justify-between">
-          <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-zinc-500">Confidential Prompt</label>
+          <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-zinc-500">Research Brief</label>
           <AnimatePresence>
             {isFocused && (
               <motion.span 
@@ -238,7 +238,7 @@ export function TextInferenceWizard() {
                 exit={{ opacity: 0, scale: 0.8 }}
                 className="flex items-center gap-1.5 text-[10px] font-bold text-zinc-300 uppercase tracking-widest bg-zinc-800 px-2 py-0.5 rounded border border-zinc-700"
               >
-                <Lock className="w-3 h-3" /> FHE Protected
+                <Lock className="w-3 h-3" /> Fhenix Private
               </motion.span>
             )}
           </AnimatePresence>
@@ -251,7 +251,7 @@ export function TextInferenceWizard() {
             onChange={(event) => setPrompt(event.target.value)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            placeholder="Enter your confidential prompt..."
+            placeholder="Ask about ETF flows, macro risk, treasury moves, narrative shifts, index rotation, or venture activity..."
             value={prompt}
           />
         </div>
@@ -263,9 +263,9 @@ export function TextInferenceWizard() {
             <Lock className="w-4 h-4" />
           </div>
           <div className="space-y-1">
-            <h4 className="text-sm font-semibold text-white">End-to-End Encryption</h4>
+            <h4 className="text-sm font-semibold text-white">Private Research Execution</h4>
             <p className="text-xs leading-relaxed text-zinc-500">
-              Your prompt is encrypted in the browser, uploaded as an encrypted blob, and only the assigned quorum can decrypt the prompt key through CoFHE permissions.
+              Kageyomi turns your market question into an encrypted research job. Fhenix CoFHE protects the brief and output while the assigned quorum executes and verifies the agent run.
             </p>
           </div>
         </div>
@@ -276,7 +276,7 @@ export function TextInferenceWizard() {
           {KAGEYOMI_AGENT_MODE && (
             <div className="space-y-2 flex-1 sm:flex-none">
               <label className="block text-[10px] font-bold uppercase tracking-[0.15em] text-zinc-500">
-                Kageyomi Agent
+                Research Agent
               </label>
               <div className="relative">
                 <select
@@ -350,7 +350,7 @@ export function TextInferenceWizard() {
           ) : (
             <span className="relative z-10 flex items-center gap-2">
               <Lock className="w-4 h-4" />
-              {KAGEYOMI_AGENT_MODE ? 'Run Confidential Research' : 'Run Confidential Inference'}
+              {KAGEYOMI_AGENT_MODE ? 'Run Agent Research' : 'Run Private Inference'}
             </span>
           )}
           

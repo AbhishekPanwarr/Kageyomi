@@ -14,11 +14,11 @@ export function HistoryPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-medium text-white tracking-tight">Research History</h1>
-          <p className="text-sm text-zinc-500 mt-2">Past confidential queries and agent responses.</p>
+          <p className="text-sm text-zinc-500 mt-2">Past market briefs, agent verdicts, and privately decrypted outputs.</p>
         </div>
         <Link to="/inference/new" className="flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black hover:bg-zinc-200 transition-colors">
           <Search className="w-4 h-4" />
-          New Query
+          New Research Run
         </Link>
       </div>
       
@@ -32,7 +32,7 @@ export function HistoryPage() {
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="text-sm font-semibold text-white truncate">{item.title}</h3>
                 <span className="flex items-center gap-1 text-[10px] text-zinc-500 bg-zinc-800 px-1.5 py-0.5 rounded border border-zinc-700">
-                  <Lock className="w-3 h-3" /> E2E
+                  <Lock className="w-3 h-3" /> PRIVATE
                 </span>
               </div>
               <p className="text-xs text-zinc-500 truncate">{item.preview}</p>

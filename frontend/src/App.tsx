@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, NavLink, Outlet, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, Link, NavLink, Outlet, Route, Routes } from 'react-router-dom'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { Bell, Home, Search, Bot, History, Briefcase, Settings, BookOpen, MessageSquare, ChevronRight } from 'lucide-react'
 
@@ -86,13 +86,18 @@ function SideNavItem({ to, icon: Icon, label, badge }: { to: string; icon: any; 
 }
 
 function KageyomiSidebar() {
-  const { address, isConnected } = useAccount()
   return (
     <aside className="hidden lg:flex w-56 shrink-0 flex-col border-r border-zinc-800 bg-[#0d0d0d] h-screen sticky top-0">
       {/* Logo */}
-      <div className="flex items-center gap-2 px-4 py-5 border-b border-zinc-800">
-        <div className="w-7 h-7 bg-white text-black flex items-center justify-center font-bold text-base rounded-sm shrink-0">K</div>
-        <span className="font-bold text-sm tracking-wider text-white">KAGEYOMI</span>
+      <div className="flex items-center gap-3 px-4 py-4 border-b border-zinc-800">
+        <img
+          alt="Kageyomi"
+          className="h-10 w-auto object-contain shrink-0"
+          src="/kageyomi-logo.jpeg"
+        />
+        <span className="font-semibold text-sm tracking-[0.28em] text-white">
+          KAGEYOMI
+        </span>
       </div>
 
       {/* Nav */}
@@ -116,18 +121,20 @@ function KageyomiSidebar() {
 }
 
 function KageyomiHeader() {
-  const { address, isConnected } = useAccount()
   return (
     <header className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-zinc-800 bg-[#0d0d0d]/90 backdrop-blur-md px-6">
       <div className="flex items-center gap-4 text-xs text-zinc-400">
         <span className="flex items-center gap-1.5">
-          <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
-          Mainnet
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+          Agent Mesh: 7 Live
         </span>
-        <span className="text-zinc-600">Gas: <span className="text-zinc-400">12 gwei</span></span>
         <span className="flex items-center gap-1.5">
-          <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
-          SoSoValue API: Live
+          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+          SoSoValue: Live
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="h-1.5 w-1.5 rounded-full bg-zinc-300" />
+          Fhenix CoFHE: Active
         </span>
       </div>
       <div className="flex items-center gap-3">
@@ -156,9 +163,7 @@ function KageyomiLayout() {
   )
 }
 
-function BlindferenceLayout() {
-  const location = useLocation()
-
+function PublicLayout() {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white/[0.12]">
       <Wave3Popup />
@@ -168,8 +173,14 @@ function BlindferenceLayout() {
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
               <div className="flex items-center gap-2">
                 <Link className="flex items-center gap-2" to="/">
-                  <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-bold text-xl rounded-sm">B</div>
-                  <span className="font-semibold text-lg tracking-wide">BLINDFERENCE</span>
+                  <img
+                    alt="Kageyomi"
+                    className="h-9 w-auto object-contain shrink-0"
+                    src="/kageyomi-logo.jpeg"
+                  />
+                  <span className="font-semibold text-lg tracking-[0.26em] text-white">
+                    KAGEYOMI
+                  </span>
                 </Link>
               </div>
               <nav className="hidden md:flex items-center gap-8 text-sm text-zinc-400">
@@ -187,7 +198,7 @@ function BlindferenceLayout() {
           </main>
           <footer className="border-t border-zinc-800 py-12 px-6">
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-500">
-              <p>© 2026 Blindference.</p>
+              <p>© 2026 Kageyomi.</p>
               <p>Powered by Fhenix CoFHE</p>
             </div>
           </footer>
@@ -214,7 +225,7 @@ export default function App() {
             <Route element={<Placeholder title="Support" />} path="support" />
           </Route>
         ) : (
-          <Route element={<BlindferenceLayout />} path="/">
+          <Route element={<PublicLayout />} path="/">
             <Route element={<HomePage />} index />
             <Route element={<Placeholder title="Model Marketplace" subtitle="This module will be added in upcoming waves." />} path="models" />
             <Route element={<Placeholder title="Network Nodes" subtitle="Node visualization will be added in upcoming waves." />} path="nodes" />

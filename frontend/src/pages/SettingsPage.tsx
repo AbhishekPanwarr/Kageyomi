@@ -19,7 +19,7 @@ export function SettingsPage() {
           </div>
           <div>
             <h2 className="text-lg font-semibold text-white">Connected Wallet</h2>
-            <p className="text-xs text-zinc-500">Your Web3 identity for confidential access</p>
+            <p className="text-xs text-zinc-500">Your Web3 identity for private research access</p>
           </div>
         </div>
 

@@ -235,9 +235,9 @@ function AssistantBubble({ entry }: { entry: ChatEntry }) {
           {isPending && (
             <span className="flex items-center gap-1 text-[10px] text-zinc-600">
               <Loader2 className="w-3 h-3 animate-spin" />
-              {entry.status === 'encrypting' ? 'Encrypting...'
-                : entry.status === 'processing' ? 'Processing via quorum...'
-                : 'Submitting...'}
+              {entry.status === 'encrypting' ? 'Sealing brief...'
+                : entry.status === 'processing' ? 'Running agent route...'
+                : 'Dispatching run...'}
             </span>
           )}
         </div>

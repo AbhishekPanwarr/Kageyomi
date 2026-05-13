@@ -177,9 +177,15 @@ export default function Dashboard() {
     <div className="min-h-screen bg-zinc-950 text-white flex overflow-hidden font-sans">
       {/* Sidebar Navigation */}
       <aside className="hidden md:flex w-[240px] flex-col border-r border-zinc-900 bg-zinc-950 z-20 shrink-0">
-        <div className="h-16 flex items-center px-6 border-b border-zinc-900 space-x-2">
-          <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-bold text-xl rounded-sm">K</div>
-          <span className="font-semibold text-lg tracking-wide">KAGEYOMI</span>
+        <div className="h-16 flex items-center gap-3 px-6 border-b border-zinc-900">
+          <img
+            alt="Kageyomi"
+            className="h-10 w-auto object-contain shrink-0"
+            src="/kageyomi-logo.jpeg"
+          />
+          <span className="font-semibold text-lg tracking-[0.26em] text-white">
+            KAGEYOMI
+          </span>
         </div>
         
         <div className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
@@ -202,9 +208,15 @@ export default function Dashboard() {
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         {/* Top Header */}
         <header className="h-16 border-b border-zinc-900 bg-zinc-950 flex items-center justify-between px-6 shrink-0 z-10 w-full">
-          <div className="flex items-center md:hidden space-x-2">
-            <div className="w-8 h-8 bg-white text-black flex items-center justify-center font-bold text-xl rounded-sm">K</div>
-            <span className="font-semibold tracking-wide">KAGEYOMI</span>
+          <div className="flex items-center gap-2 md:hidden">
+            <img
+              alt="Kageyomi"
+              className="h-9 w-auto object-contain shrink-0"
+              src="/kageyomi-logo.jpeg"
+            />
+            <span className="font-semibold text-sm tracking-[0.22em] text-white">
+              KAGEYOMI
+            </span>
           </div>
           
           <div className="hidden md:flex items-center space-x-6 text-sm text-zinc-400">

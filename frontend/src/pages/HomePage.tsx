@@ -18,7 +18,7 @@ const EXECUTION_STEPS = [
 
 const ACTIVE_AGENTS = [
   { name: 'FlowSentinel', signal: '+$1.2B inflow (7d)', icon: Activity },
-  { name: 'NarrativeScope', signal: '+0.76 bullish', icon: Newspaper },
+  { name: 'NarrativeScope', signal: '+0.76 narrative score', icon: Newspaper },
   { name: 'TreasuryRadar', signal: 'MSTR: +3,015 BTC', icon: Landmark },
 ]
 
@@ -79,16 +79,16 @@ export function HomePage() {
             <h1 className="text-2xl font-semibold text-white">
               {getGreeting()}, Researcher
             </h1>
-            <p className="mt-1 text-sm text-zinc-500">Secure isolated environment initialized.</p>
+            <p className="mt-1 text-sm text-zinc-500">Agentic crypto research stack online. Fhenix keeps the brief and output private while Kageyomi hunts for signal.</p>
           </div>
 
           {/* Stats row */}
           <div className="mb-8 grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              { label: 'Active Research Jobs', value: '3', sub: '+1' },
-              { label: 'Total Queries', value: '47', sub: 'this month' },
-              { label: 'Avg. Response', value: '2.3s', sub: 'isolated enclave' },
-              { label: 'Verification Rate', value: '100%', sub: 'on-chain verified' },
+              { label: 'Live Agent Runs', value: '3', sub: '+1 in flight' },
+              { label: 'Research Briefs', value: '47', sub: 'this month' },
+              { label: 'Median Turnaround', value: '2.3s', sub: 'agent route + replay' },
+              { label: 'Verified Runs', value: '100%', sub: 'receipt-backed' },
             ].map((stat) => (
               <div key={stat.label} className="rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-5">
                 <div className="text-[10px] uppercase tracking-widest text-zinc-500 font-medium">{stat.label}</div>
@@ -105,10 +105,10 @@ export function HomePage() {
               className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-black hover:bg-zinc-200 transition-colors"
             >
               <Lock className="w-4 h-4" />
-              Run Confidential Analysis
+              Launch Research Run
             </Link>
             <div className="flex gap-2">
-              {['BTC ETF flows vs CPI', 'MSTR accumulation pattern'].map((p) => (
+              {['BTC ETF flows vs CPI', 'MSTR treasury cadence'].map((p) => (
                 <Link
                   key={p}
                   to="/inference/new"
@@ -122,7 +122,7 @@ export function HomePage() {
 
           {/* Active agents */}
           <div>
-            <h2 className="mb-4 text-sm font-semibold text-zinc-300">Active Agents</h2>
+            <h2 className="mb-4 text-sm font-semibold text-zinc-300">Live Research Agents</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {ACTIVE_AGENTS.map((agent) => (
                 <div key={agent.name} className="flex items-center gap-4 rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-4 hover:border-zinc-700 transition-colors">
@@ -146,26 +146,26 @@ export function HomePage() {
 
           {/* Pipeline details */}
           <div>
-            <h2 className="mb-4 text-sm font-semibold text-zinc-300">Confidential Pipeline</h2>
+            <h2 className="mb-4 text-sm font-semibold text-zinc-300">Research Engine</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
                 {
-                  icon: Lock,
+                  icon: BarChart2,
                   step: '01',
-                  title: 'FHE Encryption',
-                  desc: 'Your prompt is encrypted locally with AES-GCM before leaving the browser. The CoFHE key is split and permissioned via on-chain ACL — no node sees plaintext.',
+                  title: 'Intent Routing',
+                  desc: 'Kageyomi reads the market question, routes it to the right specialists, and decides whether the run needs flows, macro, treasury, index, news, or venture data.',
                 },
                 {
                   icon: Network,
                   step: '02',
-                  title: 'Blindference Quorum',
-                  desc: 'An ICL-assigned leader node runs the SoSoValue agent under FHE. Two verifiers independently replay from IPFS receipts. All 3 must reach consensus.',
+                  title: 'Market Data Capture',
+                  desc: 'The leader agent calls live SoSoValue endpoints, canonicalizes each response, and records signed UAVP receipts so every research step can be replayed deterministically.',
                 },
                 {
-                  icon: TrendingUp,
+                  icon: Lock,
                   step: '03',
-                  title: 'UAVP Verification',
-                  desc: 'Leader commits a trace hash on-chain. Verifiers validate execution determinism via UAVP replay before the result is accepted and output returned to you.',
+                  title: 'Confidential Verification',
+                  desc: 'Fhenix-backed confidential inferencing protects the brief and output while verifiers replay the frozen research context, compare hashes, and only then release the result.',
                 },
               ].map(({ icon: Icon, step, title, desc }) => (
                 <div key={step} className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-5 flex flex-col gap-3 hover:border-zinc-700 transition-colors">
@@ -188,7 +188,7 @@ export function HomePage() {
 
       {/* Right sidebar — Execution trace */}
       <div className="hidden xl:flex w-64 shrink-0 flex-col border-l border-zinc-800 bg-[#0d0d0d] px-5 py-8">
-        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-500 mb-6">Execution Trace</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-500 mb-6">Research Trace</p>
         <div className="space-y-5">
           {EXECUTION_STEPS.map((step, i) => (
             <div key={step} className="flex items-start gap-3">
@@ -201,7 +201,7 @@ export function HomePage() {
                   </div>
                 )}
                 {step === 'Quorum Verification' && (
-                  <div className="text-[11px] text-zinc-700 mt-0.5">Fhenix network consensus</div>
+                  <div className="text-[11px] text-zinc-700 mt-0.5">Verifier replay + hash match</div>
                 )}
               </div>
             </div>

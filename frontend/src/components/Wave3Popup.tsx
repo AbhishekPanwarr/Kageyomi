@@ -55,11 +55,11 @@ export function Wave3Popup() {
               </div>
               
               <h2 className="mb-4 text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                Welcome to the New Blindference
+                Welcome to Kageyomi Wave 3
               </h2>
               
               <p className="mb-10 text-gray-400 text-sm sm:text-base leading-relaxed max-w-2xl">
-                We've massively expanded the protocol in Wave 3. We've moved beyond risk scoring to bring you full end-to-end confidential inference with crypto-economic guarantees and a completely overhauled developer experience.
+                Kageyomi now pairs specialist crypto research agents with Fhenix confidential inferencing, giving you private execution, replayable market-data receipts, and a sharper research workflow.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -68,8 +68,8 @@ export function Wave3Popup() {
                     <LockKeyhole className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2 tracking-wide">1. End-to-End Encrypted Inference</h4>
-                    <p className="text-sm text-gray-500 leading-relaxed">Run fully confidential text generation via Groq Llama 3 or Google Gemini. Prompts are AES-encrypted locally and keys are secured on-chain via Threshold FHE, ensuring zero exposure.</p>
+                    <h4 className="font-bold text-white mb-2 tracking-wide">1. Agentic Crypto Research</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">Run specialist market agents for flows, macro, treasury behavior, narratives, indices, and venture activity instead of a single generic chatbot pass.</p>
                   </div>
                 </div>
 
@@ -78,8 +78,8 @@ export function Wave3Popup() {
                     <Network className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2 tracking-wide">2. 1+2 Quorum Consensus</h4>
-                    <p className="text-sm text-gray-500 leading-relaxed">A robust distributed architecture featuring 1 leader node and 2 verifier nodes. This crypto-economically guarantees the integrity of inference execution and prevents tampered results.</p>
+                    <h4 className="font-bold text-white mb-2 tracking-wide">2. Quorum-Verified Execution</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">A leader executes the research path while verifier nodes replay the frozen receipt trace, ensuring the final thesis matches the exact evidence used in the run.</p>
                   </div>
                 </div>
 
@@ -88,8 +88,8 @@ export function Wave3Popup() {
                     <Shield className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2 tracking-wide">3. Onchain Risk Coverage</h4>
-                    <p className="text-sm text-gray-500 leading-relaxed">Fully functional hallucination insurance powered by Reineira. Disputed inferences are verified via network consensus, automatically triggering USDC payouts via smart contract escrow.</p>
+                    <h4 className="font-bold text-white mb-2 tracking-wide">3. Fhenix Privacy Rail</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">Prompts and outputs stay private under Fhenix CoFHE permissions, so you can research sensitive market ideas without leaking the thesis you are exploring.</p>
                   </div>
                 </div>
 
@@ -98,8 +98,8 @@ export function Wave3Popup() {
                     <HardDrive className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2 tracking-wide">4. Pinata IPFS Integration</h4>
-                    <p className="text-sm text-gray-500 leading-relaxed">Secure, decentralized prompt storage using Pinata blobs. This isolates heavy payload data from the blockchain, reducing network bloat while ensuring absolute data immutability.</p>
+                    <h4 className="font-bold text-white mb-2 tracking-wide">4. UAVP Receipt Trail</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed">Every live SoSoValue tool call is canonicalized, hashed, and stored as a receipt so the research run can be replayed from frozen evidence instead of drifting live APIs.</p>
                   </div>
                 </div>
 
@@ -108,8 +108,8 @@ export function Wave3Popup() {
                     <Monitor className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-white mb-2 tracking-wide">5. Pure Black Protocol Aesthetic</h4>
-                    <p className="text-sm text-gray-500 leading-relaxed max-w-3xl">A massive frontend overhaul bringing a sleek, developer-focused dark mode experience. Featuring fluid framer-motion micro-animations, high-contrast typography, and intuitive workflows tailored for web3 engineers.</p>
+                    <h4 className="font-bold text-white mb-2 tracking-wide">5. Research Terminal UX</h4>
+                    <p className="text-sm text-gray-500 leading-relaxed max-w-3xl">The interface now centers on agent selection, research traces, and verifiable outputs, while keeping the privacy layer visible but secondary to the market workflow.</p>
                   </div>
                 </div>
               </div>
@@ -119,7 +119,7 @@ export function Wave3Popup() {
                   onClick={closePopup}
                   className="w-full sm:w-auto min-w-[300px] rounded bg-emerald-500 hover:bg-emerald-400 px-8 py-4 text-sm font-bold uppercase tracking-widest text-black transition-colors shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                 >
-                  Start Building on Wave 3
+                  Enter Kageyomi
                 </button>
               </div>
             </div>

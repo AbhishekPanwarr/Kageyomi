@@ -1,20 +1,20 @@
 import { Sparkles, Zap, BarChart2, Newspaper, Landmark, Globe, Network } from 'lucide-react'
 
 const AGENTS = [
-  { key: 'FullGraph', label: 'Auto (All Agents)', icon: Sparkles, desc: 'Runs all 6 agents in full graph mode. Intelligently routes your query to the relevant sub-agents, aggregates their insights, and provides a comprehensive synthesized report.' },
-  { key: 'FlowSentinel', label: 'FlowSentinel', icon: Zap, desc: 'ETF & institutional flow analyzer. Monitors on-chain fund movements, ETF inflows/outflows, and large institutional wallet activity to detect early liquidity trends.' },
-  { key: 'NarrativeScope', label: 'NarrativeScope', icon: Newspaper, desc: 'Sentiment & news intelligence. Scans social media, news outlets, and crypto-native forums to quantify market sentiment and identify emerging narratives.' },
-  { key: 'TreasuryRadar', label: 'TreasuryRadar', icon: Landmark, desc: 'Corporate BTC accumulation tracker. Keeps tabs on public company treasuries, microstrategy purchases, and sovereign nation accumulation patterns.' },
-  { key: 'IndexArb', label: 'IndexArb', icon: BarChart2, desc: 'Relative value scanner. Identifies pricing inefficiencies and arbitrage opportunities across different crypto indices, pairs, and exchanges.' },
-  { key: 'MacroShield', label: 'MacroShield', icon: Globe, desc: 'Macro event risk modeler. Correlates traditional macroeconomic indicators (CPI, interest rates, DXY) with crypto market volatility to assess systemic risk.' },
-  { key: 'VentureMap', label: 'VentureMap', icon: Network, desc: 'Fundraising & VC intelligence. Tracks private funding rounds, token unlocks, and venture capital movement to predict ecosystem growth and sell pressure.' },
+  { key: 'FullGraph', label: 'Auto Router', icon: Sparkles, desc: 'Routes the brief to the most relevant specialists, then hands the evidence set to StrategyForge for a final cross-signal thesis.' },
+  { key: 'FlowSentinel', label: 'FlowSentinel', icon: Zap, desc: 'Tracks ETF flow momentum and institutional demand shifts from SoSoValue flow endpoints to spot liquidity pressure early.' },
+  { key: 'NarrativeScope', label: 'NarrativeScope', icon: Newspaper, desc: 'Reads crypto news and narrative momentum to surface the stories currently shaping positioning and sentiment.' },
+  { key: 'TreasuryRadar', label: 'TreasuryRadar', icon: Landmark, desc: 'Follows corporate bitcoin treasury behavior, headline accumulation, and balance-sheet conviction across public entities.' },
+  { key: 'IndexArb', label: 'IndexArb', icon: BarChart2, desc: 'Scans SoSoValue index performance for leadership, weakness, and cross-sector rotation inside crypto beta.' },
+  { key: 'MacroShield', label: 'MacroShield', icon: Globe, desc: 'Maps CPI, FOMC, payrolls, and macro surprise history into crypto risk so the thesis is not blind to broader market pressure.' },
+  { key: 'VentureMap', label: 'VentureMap', icon: Network, desc: 'Tracks fundraising and venture activity to understand where capital is concentrating before it becomes a visible narrative.' },
 ]
 
 export function AgentsPage() {
   return (
-    <div className="mx-auto max-w-4xl px-6 py-12">
+      <div className="mx-auto max-w-4xl px-6 py-12">
       <h1 className="mb-2 text-3xl font-medium text-white tracking-tight">Kageyomi Agents</h1>
-      <p className="text-sm text-zinc-500 mb-8">Our specialized AI agents run securely within Fhenix enclaves.</p>
+      <p className="text-sm text-zinc-500 mb-8">Six specialist crypto research agents plus synthesis, with Fhenix confidential inferencing protecting every brief, tool call, and result.</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {AGENTS.map((agent) => {

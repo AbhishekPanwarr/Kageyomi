@@ -113,28 +113,28 @@ export function InferenceStatusPage() {
         return { text: 'In Queue', icon: Clock, color: 'text-gray-400', bg: 'bg-white/[0.05]' }
       case 'ASSIGNED':
         return {
-          text: 'Assigning Quorum',
+          text: 'Routing Research Quorum',
           icon: CheckCircle2,
           color: 'text-blue-400',
           bg: 'bg-blue-500/10 border border-blue-500/20',
         }
       case 'EXECUTING':
         return {
-          text: 'Leader Executing FHE',
+          text: 'Lead Agent Running',
           icon: CheckCircle2,
           color: 'text-blue-400',
           bg: 'bg-blue-500/10 border border-blue-500/20',
         }
       case 'VERIFYING':
         return {
-          text: 'Verifiers Checking Result',
+          text: 'Verifier Replay Running',
           icon: CheckCircle2,
           color: 'text-yellow-400',
           bg: 'bg-yellow-500/10 border border-yellow-500/20',
         }
       case 'ACCEPTED':
         return {
-          text: 'Consensus Reached',
+          text: 'Research Verified',
           icon: CheckCircle2,
           color: 'text-emerald-400',
           bg: 'bg-emerald-500/10 border border-emerald-500/20',
@@ -226,13 +226,13 @@ export function InferenceStatusPage() {
 
           {selectedKageyomiAgent ? (
             <section className="rounded-xl border border-white/10 bg-black p-6">
-              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">Kageyomi Path</h3>
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">Agent Route</h3>
               <div className="mt-3 flex flex-wrap items-center gap-3">
                 <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-400">
                   {selectedKageyomiAgent}
                 </span>
                 <span className="text-sm text-gray-400">
-                  Leader runs SoSoValue-backed agent analysis, then verifiers replay from frozen receipts before local decrypt.
+                  The lead node runs the selected SoSoValue-backed research path, then verifiers replay the frozen receipt set before the result is revealed locally.
                 </span>
               </div>
             </section>
@@ -290,16 +290,16 @@ export function InferenceStatusPage() {
               <div className="flex w-full flex-col gap-6">
                 <div className="w-full rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-5 text-emerald-400">
                   <div className="border-b border-emerald-500/20 pb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-500">
-                    Decrypted Answer
+                    Decrypted Research Output
                   </div>
                   {isDecryptingAnswer ? (
-                    <div className="py-8 text-sm text-gray-400 font-mono">Decrypting answer...</div>
+                    <div className="py-8 text-sm text-gray-400 font-mono">Decrypting research output...</div>
                   ) : textAnswerError ? (
                     <div className="py-8 text-sm text-red-400">{textAnswerError}</div>
                   ) : textAnswer ? (
                     <pre className="mt-4 whitespace-pre-wrap font-sans text-sm leading-relaxed text-white">{textAnswer}</pre>
                   ) : (
-                    <div className="py-8 text-sm text-gray-500 font-mono">Waiting for output key...</div>
+                    <div className="py-8 text-sm text-gray-500 font-mono">Waiting for reveal key...</div>
                   )}
                 </div>
                 <div className="w-full rounded-xl border border-white/10 bg-white/[0.02] p-5">
@@ -418,10 +418,10 @@ export function InferenceStatusPage() {
                     transition={{ repeat: Infinity, duration: 2 }}
                     className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-500"
                   >
-                    {status.status === 'VERIFYING' ? 'Verifying Results...' : 'Computing FHE...'}
+                    {status.status === 'VERIFYING' ? 'Replaying Research Trace...' : 'Running Agent Thesis...'}
                   </motion.p>
                   <p className="text-[10px] font-mono text-gray-500">
-                    Generating cryptographic proofs
+                    Fhenix protects the brief while the quorum checks deterministic receipts
                   </p>
                 </div>
               </div>

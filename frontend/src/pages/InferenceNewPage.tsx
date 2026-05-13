@@ -22,13 +22,13 @@ const TEXT_MODEL_OPTIONS = {
 type TextModelKey = keyof typeof TEXT_MODEL_OPTIONS
 
 const AGENT_DEFS = [
-  { key: 'FullGraph',      label: 'Auto (All Agents)',  icon: Sparkles,  desc: 'Runs all 7 agents in full graph mode' },
-  { key: 'FlowSentinel',  label: 'FlowSentinel',       icon: Zap,        desc: 'ETF & institutional flow analyzer' },
-  { key: 'NarrativeScope',label: 'NarrativeScope',     icon: Newspaper,  desc: 'Sentiment & news intelligence' },
-  { key: 'TreasuryRadar', label: 'TreasuryRadar',      icon: Landmark,   desc: 'Corporate BTC accumulation tracker' },
-  { key: 'IndexArb',      label: 'IndexArb',           icon: BarChart2,  desc: 'Relative value scanner' },
-  { key: 'MacroShield',   label: 'MacroShield',        icon: Globe,      desc: 'Macro event risk modeler' },
-  { key: 'VentureMap',    label: 'VentureMap',         icon: Network,    desc: 'Fundraising & VC intelligence' },
+  { key: 'FullGraph',      label: 'Auto Router',        icon: Sparkles,  desc: 'Routes the brief across specialists and composes the final thesis' },
+  { key: 'FlowSentinel',   label: 'FlowSentinel',       icon: Zap,       desc: 'ETF flow and institutional demand tracker' },
+  { key: 'NarrativeScope', label: 'NarrativeScope',     icon: Newspaper, desc: 'News, narrative, and sentiment reader' },
+  { key: 'TreasuryRadar',  label: 'TreasuryRadar',      icon: Landmark,  desc: 'Corporate and public BTC treasury tracker' },
+  { key: 'IndexArb',       label: 'IndexArb',           icon: BarChart2, desc: 'Crypto index relative-strength scanner' },
+  { key: 'MacroShield',    label: 'MacroShield',        icon: Globe,     desc: 'Macro surprise and cross-market risk mapper' },
+  { key: 'VentureMap',     label: 'VentureMap',         icon: Network,   desc: 'Private funding and venture rotation tracker' },
 ] as const
 type AgentKey = typeof AGENT_DEFS[number]['key']
 const KAGEYOMI_AGENTS = AGENT_DEFS.map(a => a.key)
@@ -36,12 +36,12 @@ const KAGEYOMI_AGENTS = AGENT_DEFS.map(a => a.key)
 type Stage = 'idle' | 'encrypting' | 'uploading' | 'submitting'
 
 const TRACE_STEPS = [
-  { key: 'encrypt',  label: 'Query Encrypted',       sub: 'AES-GCM + CoFHE key split' },
-  { key: 'icl',      label: 'ICL Assigned',           sub: 'Leader + 2 verifiers' },
-  { key: 'leader',   label: 'Leader Execution',       sub: 'SoSoValue agent run' },
-  { key: 'quorum',   label: 'Quorum Verification',    sub: 'Fhenix network consensus' },
-  { key: 'onchain',  label: 'On-Chain Commitment',    sub: 'Receipt root anchored' },
-  { key: 'decrypt',  label: 'Local Decryption',       sub: 'Output decrypted in browser' },
+  { key: 'encrypt',  label: 'Brief Sealed',           sub: 'AES-GCM + CoFHE key split' },
+  { key: 'icl',      label: 'Research Quorum',        sub: 'Leader + 2 verifiers assigned' },
+  { key: 'leader',   label: 'Lead Agent Run',         sub: 'SoSoValue tools + specialist reasoning' },
+  { key: 'quorum',   label: 'Verifier Replay',        sub: 'Frozen receipts checked for hash match' },
+  { key: 'onchain',  label: 'Trace Anchored',         sub: 'Receipt root + trace hash committed' },
+  { key: 'decrypt',  label: 'Local Reveal',           sub: 'Result decrypted only in your browser' },
 ]
 
 function resolveDefaultModelKey(): TextModelKey {
@@ -193,7 +193,7 @@ export function InferenceNewPage() {
     return (
       <div className="mx-auto max-w-2xl pb-20 pt-12 px-6">
         <h1 className="mb-2 text-3xl font-medium text-white tracking-tight">New Text Inference</h1>
-        <p className="text-sm text-zinc-500 mb-8">Secure, end-to-end encrypted inference via FHE.</p>
+        <p className="text-sm text-zinc-500 mb-8">Launch a private research run backed by Fhenix confidential inferencing.</p>
       </div>
     )
   }
@@ -222,15 +222,15 @@ export function InferenceNewPage() {
               {!hasMessages && (
                 <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                   className="flex flex-col items-center justify-center min-h-[40vh] text-center space-y-3 pb-8">
-                  <h1 className="text-3xl font-semibold tracking-tight text-white">Where should we begin?</h1>
-                  <p className="text-sm text-zinc-500">Confidential research powered by CoFHE &amp; Blindference quorum.</p>
+                  <h1 className="text-3xl font-semibold tracking-tight text-white">What market question are we testing?</h1>
+                  <p className="text-sm text-zinc-500">Route a crypto research brief through Kageyomi&apos;s specialist agents, with Fhenix keeping the brief and result private.</p>
                   {/* Quick chips */}
                   <div className="flex flex-wrap justify-center gap-2 pt-4">
                     {[
-                      { icon: BarChart2, label: 'BTC ETF flows vs CPI' },
-                      { icon: Landmark, label: 'MSTR accumulation' },
-                      { icon: Globe, label: 'Macro risk outlook' },
-                      { icon: Newspaper, label: 'Narrative sentiment' },
+                      { icon: BarChart2, label: 'BTC ETF flows vs CPI surprise' },
+                      { icon: Landmark, label: 'MSTR treasury cadence' },
+                      { icon: Globe, label: 'Macro risk into next print' },
+                      { icon: Newspaper, label: 'Latest BTC narrative shift' },
                     ].map(({ icon: Icon, label }) => (
                       <button key={label} type="button" onClick={() => setPrompt(label)}
                         className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-2.5 text-xs text-zinc-400 hover:border-zinc-700 hover:text-zinc-200 hover:bg-zinc-800/60 transition-all">
@@ -321,7 +321,7 @@ export function InferenceNewPage() {
                       <motion.div initial={{ opacity: 0, y: 8, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.97 }} transition={{ duration: 0.15 }}
                         className="absolute bottom-full left-0 mb-2 w-64 rounded-xl border border-zinc-700 bg-[#1a1a1a] shadow-2xl z-50 overflow-hidden">
-                        <div className="px-3 pt-3 pb-1"><p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">Select Agent</p></div>
+                        <div className="px-3 pt-3 pb-1"><p className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">Research Agent</p></div>
                         {AGENT_DEFS.map((agent, i) => {
                           const Icon = agent.icon; const isSel = selectedAgent === agent.key
                           return (
@@ -348,11 +348,11 @@ export function InferenceNewPage() {
                       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         className="flex items-center gap-1.5 text-[11px] text-zinc-500">
                         <Loader2 className="w-3 h-3 animate-spin" />
-                        {stage === 'encrypting' ? 'Encrypting...' : stage === 'uploading' ? 'Uploading...' : 'Submitting...'}
+                        {stage === 'encrypting' ? 'Sealing brief...' : stage === 'uploading' ? 'Uploading receipts...' : 'Dispatching run...'}
                       </motion.span>
                     )}
                   </AnimatePresence>
-                  <div className="flex items-center gap-1 text-[11px] text-zinc-700"><Lock className="w-3 h-3" /> E2E</div>
+                  <div className="flex items-center gap-1 text-[11px] text-zinc-700"><Lock className="w-3 h-3" /> Private</div>
                   <button type="button" onClick={handleSubmit}
                     disabled={isBusy || !isReady || !address || !prompt.trim()}
                     className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-black hover:bg-zinc-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
@@ -367,7 +367,7 @@ export function InferenceNewPage() {
 
       {/* RIGHT: Execution Trace sidebar */}
       <div className="hidden xl:flex w-72 shrink-0 flex-col border-l border-zinc-800 bg-[#0d0d0d] px-6 py-8">
-        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-500 mb-8">Execution Trace</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-zinc-500 mb-8">Research Trace</p>
         <div className="relative flex flex-col gap-0">
           {TRACE_STEPS.map((step, i) => {
             const ss = stepStatus(step.key, stage, latestRequestId, jobStatus)
@@ -421,6 +421,5 @@ export function InferenceNewPage() {
     </div>
   )
 }
-
 
 
