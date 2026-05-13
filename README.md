@@ -216,6 +216,8 @@ Browser (User)
 
 ### UAVP: Unified Agent Verification Protocol
 
+"This section is specially designed for SoSoValue Api calling AI Agents and tools"
+
 Every agent tool call produces a cryptographically signed **receipt**:
 
 ```json
@@ -423,11 +425,12 @@ curl -X POST http://localhost:8001/uavp/verify \
 
 ## Architecture Paper (Draft)
 
-This project is built on the Blindference architecture — a verifiable inference quorum protocol developed for the Reineira × Fhenix Buildathon.
+This project is built on the Blindference architecture — a verifiable inference quorum protocol developed using Fhenix and Reineira Settlements.
 
 📄 **[Read the Blindference Architecture Paper](https://ivory-late-quokka-745.mypinata.cloud/ipfs/bafybeicnnfmvj6xt2w2dhvv6idfxje3fvtgu7ngbwmreknn53utneomezy)**
 
-The paper describes the Unified Agent Verification Protocol (UAVP), the receipt Merkle commitment scheme, the frozen-context verifier replay mechanism, and the CoFHE threshold key permission model that Kageyomi implements as a production application layer.
+The Paper describes the Core Confidential Architecture of how we are able to make end to end private Agentic Inferencing using Fhenix and also covers future scopes.
+"The paper is currently under draft"
 
 ---
 
