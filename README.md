@@ -4,11 +4,11 @@
 
 ### Confidential Multi-Agent Crypto Research on Fhenix CoFHE
 
-**Built for the [Reineira × Fhenix Buildathon](https://reineira.xyz/)**
+**Built for the [SoSoValue Buildathon 2026](https://app.akindo.io/wave-hacks/JBEQXgN4Zi2jA3wA?tab=overview)**
 
 [![SoSoValue](https://img.shields.io/badge/SoSoValue-API-blue?style=flat-square)](https://sosovalue-1.gitbook.io/sosovalue-api-doc)
 [![Fhenix CoFHE](https://img.shields.io/badge/Fhenix-CoFHE-purple?style=flat-square)](https://cofhe-docs.fhenix.zone/)
-[![Reineira](https://img.shields.io/badge/Reineira-UAVP-orange?style=flat-square)](https://reineira.xyz/)
+[![Reineira](https://img.shields.io/badge/Reineira-orange?style=flat-square)](https://reineira.xyz/)
 [![Blindference](https://img.shields.io/badge/Blindference-Architecture-green?style=flat-square)](https://ivory-late-quokka-745.mypinata.cloud/ipfs/bafybeicnnfmvj6xt2w2dhvv6idfxje3fvtgu7ngbwmreknn53utneomezy)
 
 </div>
@@ -25,14 +25,14 @@ When funds or researchers use standard AI platforms to analyze markets, they fac
 2. **Lack of Verifiability:** AI models hallucinate. In financial research, an AI's output is useless unless its data sources and execution path can be cryptographically proven.
 
 ### The Solution: Kageyomi
-Kageyomi solves this by deploying a network of specialized AI agents within a cryptographically verifiable, privacy-preserving execution environment. It combines fully homomorphic encryption (Fhenix CoFHE) with on-chain verification (Reineira UAVP) and live market data (SoSoValue).
+Kageyomi solves this by deploying a network of specialized AI agents within a cryptographically verifiable, privacy-preserving execution environment. It combines fully homomorphic encryption (Fhenix CoFHE) with on-chain verification (Reineira Settlements) and live market data (SoSoValue).
 
 **How it works in practice:**
 Imagine an analyst investigating a potential market shift: *"Correlate recent MicroStrategy (MSTR) accumulation patterns with incoming macroeconomic data (CPI/FOMC) to assess near-term Bitcoin liquidity risk."*
 
 1. **Confidential Submission:** The analyst's query is encrypted directly in their browser using AES-GCM. The decryption keys are secured via Fhenix CoFHE's on-chain ACL. The central infrastructure never sees the plaintext intent.
 2. **Specialized Agent Routing:** A decentralized leader node decrypts the prompt within a secure enclave and routes it to specific Kageyomi agents. *TreasuryRadar* fetches MSTR purchase history, while *MacroShield* analyzes upcoming CPI/FOMC events—both querying live SoSoValue data.
-3. **Provable Execution (UAVP):** Every data point fetched by the agents generates a cryptographically signed receipt. These receipts are hashed into a Merkle root and anchored on-chain.
+3. **Provable Execution (Fhenix):** Every data point fetched by the agents generates a cryptographically signed receipt. These receipts are hashed into a Merkle root and anchored on-chain.
 4. **Quorum Verification:** Independent verifier nodes fetch the frozen receipts from IPFS and deterministically replay the agent's synthesis. They guarantee the AI didn't hallucinate and only used the canonical SoSoValue data.
 5. **Private Delivery:** Once the quorum achieves consensus, the encrypted strategy report is returned to the analyst, where it is decrypted locally. 
 
@@ -46,8 +46,8 @@ The result is proprietary crypto research with **provable integrity**: the insig
 |---|---|---|
 | **Data** | [SoSoValue API](https://sosovalue-1.gitbook.io/sosovalue-api-doc) | Live market data: ETF flows, BTC treasuries, macro events, indices, fundraising, news feeds |
 | **Privacy** | [Fhenix CoFHE](https://cofhe-docs.fhenix.zone/) | Fully Homomorphic Encryption — prompt encrypted in browser, key permissioned via on-chain ACL |
-| **Verification** | [Reineira / UAVP](https://reineira.xyz/) | On-chain proof of faithful agent execution via receipt Merkle roots and deterministic verifier replay |
-| **Quorum** | Blindference Wave 2 | 1 leader + 2 verifier node network for consensus-gated research delivery |
+| **Verification** | [Our own Protocol and Reineira Settlements](https://reineira.xyz/) | On-chain proof of faithful agent execution via receipt Merkle roots and deterministic verifier replay |
+| **Quorum** | Blindference | 1 leader + 2 verifier node network for consensus-gated research delivery |
 
 ---
 
@@ -133,39 +133,28 @@ The final synthesis agent. StrategyForge receives the canonical signals from all
 
 ### Parallel Agent Execution Graph
 
-```mermaid
-graph TD
-    classDef primary fill:#111,stroke:#333,stroke-width:2px,color:#fff;
-    classDef agent fill:#0a0a0a,stroke:#00ff88,stroke-width:1px,color:#fff;
-    classDef output fill:#222,stroke:#fff,stroke-width:2px,color:#fff;
-
-    Planner["PLANNER (Router)<br/>• Extracts intent<br/>• Scores specialists<br/>• Selects subset"]:::primary
-
-    FlowSentinel["FlowSentinel"]:::agent
-    NarrativeScope["NarrativeScope"]:::agent
-    TreasuryRadar["TreasuryRadar"]:::agent
-    IndexArb["IndexArb"]:::agent
-    MacroShield["MacroShield"]:::agent
-    VentureMap["VentureMap"]:::agent
-
-    StrategyForge["StrategyForge<br/>(LLM Synthesis)"]:::primary
-    Output(("Research Output")):::output
-
-    Planner --> FlowSentinel
-    Planner --> NarrativeScope
-    Planner --> TreasuryRadar
-    Planner --> IndexArb
-    Planner --> MacroShield
-    Planner --> VentureMap
-
-    FlowSentinel --> StrategyForge
-    NarrativeScope --> StrategyForge
-    TreasuryRadar --> StrategyForge
-    IndexArb --> StrategyForge
-    MacroShield --> StrategyForge
-    VentureMap --> StrategyForge
-
-    StrategyForge --> Output
+```
+                        ┌─────────────────────────────────────────────────────┐
+                        │                  PLANNER (Router)                   │
+                        │  • extracts symbol, macro event, treasury ticker     │
+                        │  • scores 6 specialists via intent keywords          │
+                        │  • selects active agent subset                       │
+                        └──────────────┬──────────────────────────────────────┘
+                                       │
+              ┌────────────────────────┼────────────────────────────────────┐
+              │             ┌──────────┼───────────┐                        │
+              ▼             ▼          ▼           ▼           ▼            ▼
+       FlowSentinel  NarrativeScope  TreasuryRadar  IndexArb  MacroShield  VentureMap
+           │               │              │           │           │            │
+           │  (parallel)   │  (parallel)  │           │           │            │
+           └───────────────┴──────────────┴───────────┴───────────┴────────────┘
+                                       │
+                                       ▼
+                               StrategyForge
+                        (LLM synthesis on Groq Llama 3.3)
+                                       │
+                                       ▼
+                                 Research Output
 ```
 
 Each specialist calls a live SoSoValue endpoint, canonicalizes the response (normalized JSON, stripped metadata, 6dp float rounding), and writes a signed **UAVP receipt** to the shared state before passing to StrategyForge.
@@ -174,38 +163,41 @@ Each specialist calls a live SoSoValue endpoint, canonicalizes the response (nor
 
 ### Confidential Execution Architecture
 
-```mermaid
-sequenceDiagram
-    participant User as Browser (User)
-    participant ICL as ICL (Coordinator)
-    participant Leader as Leader Node
-    participant Verifier as Verifier Nodes (x2)
-    participant Chain as Blockchain / IPFS
-
-    User->>User: 1. AES-GCM encrypt prompt
-    User->>Chain: 2. CoFHE key split & on-chain ACL
-    User->>ICL: 3. Upload encrypted blob
-    
-    ICL->>ICL: 4. Assign 1 leader + 2 verifiers
-    ICL->>Leader: 5. Push task
-    ICL->>Verifier: 5. Push task
-
-    Leader->>Chain: 6. CoFHE threshold decrypt
-    Leader->>Leader: 7. Run Kageyomi graph (Parallel Agents)
-    Leader->>Chain: 8. Upload Receipts to IPFS
-    Leader->>Leader: 9. Compute Merkle root & hashes
-    Leader->>ICL: 10. Commit results
-    Leader->>Chain: 11. (Optional) Post metadata on-chain
-
-    Verifier->>ICL: 12. Poll for leader result
-    Verifier->>Chain: 13a. Load frozen receipts from IPFS
-    Verifier->>Verifier: 13b. Deterministic replay & verify hash
-    Verifier->>ICL: 14. Post confirmation
-
-    ICL->>ICL: 15. 2/3 quorum reached (ACCEPTED)
-
-    User->>ICL: 16a. Poll status
-    User->>User: 16b. Decrypt locally & display
+```
+Browser (User)
+  │
+  ├─ 1. AES-GCM encrypt prompt in-browser
+  ├─ 2. CoFHE key split, on-chain ACL permission to quorum addresses
+  ├─ 3. Upload encrypted blob → ICL (Inference Coordination Layer)
+  │
+ICL
+  ├─ 4. Assign 1 leader + 2 verifiers from node registry
+  ├─ 5. Push encrypted task to each node
+  │
+Leader Node (Blindference)
+  ├─ 6. CoFHE threshold decrypt prompt
+  ├─ 7. Call Kageyomi agent service (POST /uavp/execute)
+  │       └─ graph.py: planner → [6 agents in parallel] → strategy_forge
+  │       └─ Each agent: SoSoValue API call → canonicalize → UAVP receipt
+  ├─ 8. Pinata/IPFS: upload receipts → returns receipts_cid
+  ├─ 9. Compute: receipt_root (Merkle), output_hash (SHA256), trace_hash
+  ├─10. Commit: receipt_root, receipts_cid, output_hash, trace_hash → ICL
+  ├─11. (Optional) Post AgentJobMetadata on-chain → PrivateInferenceExtension.sol
+  │
+Verifier Nodes × 2 (Blindference)
+  ├─12. Poll ICL for leader result (receipts_cid, output_hash)
+  ├─13. Call Kageyomi replay service (POST /uavp/verify)
+  │       └─ Load frozen receipts from IPFS by CID
+  │       └─ Reconstruct signals from canonicalData without live API calls
+  │       └─ Re-run StrategyForge deterministically
+  │       └─ SHA256(replay output) == expected_output_hash → matched: true
+  ├─14. Each verifier posts confirmation → ICL quorum
+  │
+ICL (Quorum Acceptance)
+  ├─15. 2/3 verifier confirmations → ACCEPTED
+  │
+Browser (User)
+  └─16. Poll ICL → decrypt AES output locally → display research memo
 ```
 
 ---
@@ -429,7 +421,7 @@ curl -X POST http://localhost:8001/uavp/verify \
 
 ---
 
-## Architecture Paper
+## Architecture Paper (Draft)
 
 This project is built on the Blindference architecture — a verifiable inference quorum protocol developed for the Reineira × Fhenix Buildathon.
 
@@ -452,6 +444,6 @@ The paper describes the Unified Agent Verification Protocol (UAVP), the receipt 
 
 <div align="center">
 
-Built with 影 by the Kageyomi team · Reineira × Fhenix Buildathon 2026
+Built with 影 by the Kageyomi team Buildathon 2026
 
 </div>
